@@ -58,6 +58,15 @@ awful.keyboard.append_global_keybindings({
             end
         end,
         {description = "restore minimized", group = "client"}),
+
+    awful.key({ modkey,           }, "Tab",
+        function ()
+            awful.client.focus.history.previous()
+            if client.focus then
+                client.focus:raise()
+            end
+        end,
+        {description = "go back", group = "client"}),
 })
 
 -- Tags keybindings
@@ -84,7 +93,7 @@ awful.keyboard.append_global_keybindings({
               {description = "select next", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "client"}),
-    
+   
     -- Layout manipulation
     awful.key {
         modifiers   = { modkey },
