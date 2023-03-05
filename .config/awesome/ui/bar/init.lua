@@ -8,6 +8,7 @@ local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
 local taglist = require 'ui.bar.taglist'
+local tasklist = require 'ui.bar.tasklist'
 local layoutbox = require 'ui.bar.layoutbox'
 mylayoutbox = wibox.container.margin(layoutbox(s), dpi(4), dpi(4), dpi(4), dpi(4))
 
@@ -123,7 +124,7 @@ local function get_bar(s)
 				{ 
 					barcontainer(taglist(s)),
 					separator,
-					spacing = dpi(8),
+					barcontainer(tasklist(s)),
 					layout = wibox.layout.fixed.horizontal,
 				},
 				nil,
