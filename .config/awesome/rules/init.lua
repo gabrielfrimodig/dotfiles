@@ -43,7 +43,8 @@ ruled.client.connect_signal("request::rules", function()
                 "Wpa_gui",
                 "veromix",
                 "xtightvncviewer",
-                "Alacritty"
+                "Alacritty",
+                "Main"
             },
             -- Note that the name property shown in xprop might be set slightly after creation of the client
             -- and the name shown there might not match defined rules here.
@@ -62,12 +63,12 @@ ruled.client.connect_signal("request::rules", function()
     -- Discord always map on tag "9" on screen 1.
     ruled.client.append_rule {
         rule       = { class = "discord"     },
-        properties = { screen = 1, tag = "9" }
+        properties = { screen = 1, tag = awful.screen.focused().tags[9] }
     }
     
     -- Spotify always map to tag "8" on screen 1.
     ruled.client.append_rule {
         rule       = { class = "Spotify"     },
-        properties = { screen = 1, tag = "8" }
+        properties = { screen = 1, tag = awful.screen.focused().tags[8] }
     }
 end)

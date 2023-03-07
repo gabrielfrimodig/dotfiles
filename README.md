@@ -5,7 +5,14 @@
     <p>There's no place like <b><code>~</code></b> !</p>
 </div>
 
-<img src="https://i.imgur.com/Ewe9XO8.png" />
+<img src="https://i.imgur.com/9jIAuly.png" />
+
+## Recently updated
+
+* New top bar icons
+* Tasklist (show focused application logo)
+* Click on volume to toggle mute
+* Slider for volume and brightness widgets
 
 ## AwesomeWM
 
@@ -56,7 +63,7 @@
 <details>
 <summary>Dependencies</summary>
 
-This configuration requires the use of the git version of [awesome](https://github.com/awesomeWM/awesome). \
+[awesome-git](https://github.com/awesomeWM/awesome) \
 *TODO*
 </details>
 

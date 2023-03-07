@@ -8,6 +8,7 @@ local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
 local taglist = require 'ui.bar.taglist'
+local tasklist = require 'ui.bar.tasklist'
 local layoutbox = require 'ui.bar.layoutbox'
 mylayoutbox = wibox.container.margin(layoutbox(s), dpi(4), dpi(4), dpi(4), dpi(4))
 
@@ -26,8 +27,6 @@ local function barcontainer(widget)
     local container = wibox.widget
       {
         widget,
-        top = dpi(0),
-        bottom = dpi(0),
         left = dpi(2),
         right = dpi(2),
         widget = wibox.container.margin
@@ -41,11 +40,11 @@ local function barcontainer(widget)
             right = dpi(4),
             widget = wibox.container.margin
         },
-        bg = "#1e1e2e",--colors.container,
+        bg = "#1e1e2e",
         shape = function(cr,w,h) gears.shape.rounded_rect(cr,w,h,0) end,
         widget = wibox.container.background
     }
-return wibox.widget{
+    return wibox.widget{
         box,
         top = dpi(2),
         bottom = dpi(2),
@@ -54,6 +53,7 @@ return wibox.widget{
         widget = wibox.container.margin
     }
 end
+
 
 local separator = wibox.widget{
     markup = '<span font="' .. "JetBrains Mono 10" .. '">| </span>',
@@ -123,7 +123,7 @@ local function get_bar(s)
 				{ 
 					barcontainer(taglist(s)),
 					separator,
-					spacing = dpi(8),
+					barcontainer(tasklist(s)),
 					layout = wibox.layout.fixed.horizontal,
 				},
 				nil,

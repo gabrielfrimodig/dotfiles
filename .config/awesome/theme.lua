@@ -1,4 +1,3 @@
-
 -- Required libraries
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
@@ -10,7 +9,7 @@ local themes_path = gfs.get_themes_dir()
 local theme = {}
 
 theme.font          = "JetBrains Mono 10"
-theme.font_icon     = "Jetbrains Mono 18"
+theme.font_icon     = "Jetbrains Mono 14"
 
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#535d6c"
@@ -53,10 +52,10 @@ theme.tags_col = {
 }
 
 theme.useless_gap   = dpi(0)
-theme.border_width  = dpi(1)
-theme.border_normal = "#000000"
-theme.border_focus  = "#535d6c"
-theme.border_marked = "#91231c"
+--theme.border_width  = dpi(1)
+--theme.border_normal = "#000000"
+--theme.border_focus  = "#535d6c"
+--theme.border_marked = "#91231c"
 
 -- There are other variable sets
 -- overriding the default one when
