@@ -17,7 +17,7 @@ local button = awful.button({ }, 1, function(t) t:view_only() end)
 return function(s)
   local tag = awful.widget.taglist {
     screen  = s,
-    filter  = awful.widget.taglist.filter.noempty,
+    filter  = awful.widget.taglist.filter.all,
     buttons = button,
     layout   = {
       spacing = dpi(8),
