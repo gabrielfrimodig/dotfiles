@@ -9,7 +9,7 @@ local dpi = beautiful.xresources.apply_dpi
 
 -- Each screen has its own tag table.
 screen.connect_signal("request::desktop_decoration", function(s)
-    awful.tag({ "", "2", "3", "4", "5", "6", "7", "8", "9"}, s, awful.layout.layouts[1])
+    awful.tag({ "󰅬 ", " ", "󰨞 ", " ", " ", "󱞙 ", " ", " ", " "}, s, awful.layout.layouts[1])
 end)
 
 local button = awful.button({ }, 1, function(t) t:view_only() end)
@@ -17,7 +17,7 @@ local button = awful.button({ }, 1, function(t) t:view_only() end)
 return function(s)
   local tag = awful.widget.taglist {
     screen  = s,
-    filter  = awful.widget.taglist.filter.noempty,
+    filter  = awful.widget.taglist.filter.all,
     buttons = button,
     layout   = {
       spacing = dpi(8),
