@@ -7,7 +7,7 @@ local dpi = require("beautiful").xresources.apply_dpi
 local watch = require("awful.widget.watch")
 
 local volume = wibox.widget.textbox()
-volume.font = "JetBrains Mono 10"
+volume.font = beautiful.font
 
 local volume_slider = wibox.widget {
     {
@@ -15,11 +15,11 @@ local volume_slider = wibox.widget {
         widget = wibox.widget.slider,
         bar_shape = gears.shape.rounded_rect,
         bar_height = dpi(2),
-        bar_color = "#f5c2e7",
-        handle_color = "#f5c2e7",
+        bar_color = beautiful.pink,
+        handle_color = beautiful.pink,
         handle_shape = gears.shape.circle,
         handle_width = dpi(10),
-        handle_border_color = "#f5c2e7",
+        handle_border_color = beautiful.pink,
         handle_border_width = dpi(1),
         maximum = 100,
         minimum = 0,
@@ -57,7 +57,7 @@ local volume_widget = wibox.widget {
         volume_slider,
         wibox.widget{
             volume,
-            fg = "#f5c2e7",
+            fg = beautiful.pink,
             widget = wibox.container.background
         },
     },
@@ -91,9 +91,9 @@ watch([[bash -c "amixer get Master | grep -E '(Left|Mono):' | awk -F'[][]' '{pri
     
     -- Update the volume icon
     if is_muted == "off" then
-        volume_icon.markup = '<span font="JetBrains Mono 18" foreground="#f5c2e7">婢 </span>'
+        volume_icon.markup = '<span font="' .. beautiful.font_icon .. '" foreground="' .. beautiful.pink .. '">婢 </span>'
     else
-        volume_icon.markup = '<span font="JetBrains Mono 18" foreground="#f5c2e7">墳 </span>'
+        volume_icon.markup = '<span font="' .. beautiful.font_icon .. '" foreground="' .. beautiful.pink .. '">墳 </span>'
     end
     
     collectgarbage("collect")

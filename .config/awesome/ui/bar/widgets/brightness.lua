@@ -1,3 +1,4 @@
+
 -- Required libraries
 local awful = require("awful")
 local wibox = require('wibox')
@@ -7,7 +8,7 @@ local dpi = require('beautiful').xresources.apply_dpi
 local watch = require('awful.widget.watch')
 
 local brightness = wibox.widget.textbox()
-brightness.font = "Jetbrains Mono 10"
+brightness.font = beautiful.font
 
 local brightness_slider = wibox.widget {
     {
@@ -15,11 +16,11 @@ local brightness_slider = wibox.widget {
         widget = wibox.widget.slider,
         bar_shape = gears.shape.rounded_rect,
         bar_height = dpi(2),
-        bar_color = '#f38ba8',
-        handle_color = '#f38ba8',
+        bar_color = beautiful.red,
+        handle_color = beautiful.red,
         handle_shape = gears.shape.circle,
         handle_width = dpi(10),
-        handle_border_color = '#f38ba8',
+        handle_border_color = beautiful.red,
         handle_border_width = dpi(1),
         maximum = 100,
         minimum = 0,
@@ -46,7 +47,7 @@ brightness_slider.brightness_slider:connect_signal("property::value", function()
 end)
 
 local brightness_icon = wibox.widget {
-    markup = '<span font="Jetbrains Mono 18" foreground="#f38ba8">☀ </span>',
+    markup = '<span font="' .. beautiful.font_icon .. '"foreground="'.. beautiful.red ..'">󰃠 </span>',
     widget = wibox.widget.textbox,
 }
 
@@ -57,7 +58,7 @@ local brightness_widget = wibox.widget {
         brightness_slider,
         wibox.widget{
             brightness,
-            fg = "#f38ba8",
+            fg = beautiful.red,
             widget = wibox.container.background
         },
     },
