@@ -67,6 +67,8 @@
 *TODO*
 </details>
 
+Keybindings can be found in the [wiki page](https://github.com/gabrielfrimodig/dotfiles/wiki/Keybindings).
+
 Inspiration taken from [this reddit post](https://www.reddit.com/r/unixporn/comments/yxlylm/dwm_i_heard_catppuccin_is_the_new_cool/?utm_source=share&utm_medium=web2x&context=3).
 
 ## Neovim
