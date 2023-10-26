@@ -1,3 +1,4 @@
+
 -- Required libraries
 local awful = require("awful")
 local wibox = require("wibox")
@@ -36,7 +37,7 @@ local volume_slider = wibox.widget {
 -- Function to update the volume level based on the slider value
 local function update_volume(slider_value)
     awful.spawn('pactl set-sink-volume 0 ' .. slider_value .. '%')
-    volume.text = slider_value .. "%"
+    volume.text = slider_value .. '%'
 end
 
 -- Connect signals to update the volume level with the slider and keyboard
@@ -46,7 +47,7 @@ volume_slider.volume_slider:connect_signal("property::value", function()
 end)
 
 local volume_icon = wibox.widget {
-    markup = '<span font="JetBrains Mono 18" foreground="#f5c2e7">墳 </span>',
+    markup = '<span font="' .. beautiful.font_icon .. '"foreground="'.. beautiful.pink ..'">墳 </span>',
     widget = wibox.widget.textbox,
 }
 
@@ -80,22 +81,30 @@ volume:connect_signal("button::press", function(_, _, _, button)
     end
 end)
 
+
+local function update_volume_widget()
+    awful.spawn.easy_async([[bash -c "amixer get Master | grep -E '(Left|Mono):' | awk -F'[][]' '{print $2, $4}'"]], function(stdout)
+        local volume_level, is_muted = string.match(stdout, "(%d+)%% (%a+)")
+ 
+        if volume_level and is_muted then
+            -- Update the volume text
+            volume.text = volume_level .. '%'
+ 
+            -- Update the volume slider
+            volume_slider.volume_slider:set_value(tonumber(volume_level))
+ 
+            -- Update the volume icon
+            if is_muted == "off" then
+                volume_icon.markup = '<span font="' .. beautiful.font_icon .. '" foreground="' .. beautiful.pink .. '">婢 </span>'
+            else
+                volume_icon.markup = '<span font="' .. beautiful.font_icon .. '" foreground="' .. beautiful.pink .. '">墳 </span>'
+            end
+        end
+    end)
+end
+
 watch([[bash -c "amixer get Master | grep -E '(Left|Mono):' | awk -F'[][]' '{print $2, $4}'"]], 1, function(_, stdout)
-    local volume_level, is_muted = string.match(stdout, "(%d+)%% (%a+)")
-    
-    -- Update the volume text
-    volume.text = volume_level .. '%'
-    
-    -- Update the volume slider
-    volume_slider.volume_slider:set_value(tonumber(volume_level))
-    
-    -- Update the volume icon
-    if is_muted == "off" then
-        volume_icon.markup = '<span font="' .. beautiful.font_icon .. '" foreground="' .. beautiful.pink .. '">婢 </span>'
-    else
-        volume_icon.markup = '<span font="' .. beautiful.font_icon .. '" foreground="' .. beautiful.pink .. '">墳 </span>'
-    end
-    
+    update_volume_widget()
     collectgarbage("collect")
 end)
 
