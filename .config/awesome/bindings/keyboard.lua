@@ -21,7 +21,8 @@ awful.keyboard.append_global_keybindings({
     awful.key({ modkey, "Control" },            "m",     function ()
         awful.util.spawn("i3lock")
     end, {description = "lockscreen", group = "awesome"}),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit,
+    awful.key({ modkey, "Shift"   }, "q", function ()
+        awful.util.spawn("./.config/rofi/powermenu/powermenu.sh") end,
         {description = "quit awesome", group = "awesome"}),
 })
 
@@ -46,7 +47,15 @@ awful.keyboard.append_global_keybindings({
     end, {description = "screenshot", group = "launcher"}),
     awful.key({ "Shift" }, "Print", function ()
         filepath = "~/Pictures/Screenshots/" .. os.date("%Y-%m-%d_%H:%M:%S") .. ".png"
-        --awful.spawn.with_shell('maim -s --format png -u ' .. filepath .. '| xclip -selection clipboard -t image/png -i')
+        awful.spawn.with_shell('maim -s --format png -u ' .. filepath .. '| xclip -selection clipboard -t image/png -i')
+        naughty.notify ({
+            icon = filepath,
+            title = "Select Area for Screenshot",
+            text = "Screenshot will be saved"
+        })
+    end, {description = "selected screenshot", group = "launcher"}),
+    awful.key({ "Control", "Shift"}, "Print", function ()
+        filepath = "~/Pictures/Screenshots/" .. os.date("%Y-%m-%d_%H:%M:%S") .. ".png"
         awful.spawn.with_shell("maim -s --format png -u | xclip -selection clipboard -t image/png -i")
         naughty.notify ({
             icon = filepath,
