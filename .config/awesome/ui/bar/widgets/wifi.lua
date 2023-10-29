@@ -3,11 +3,14 @@ local wibox = require('wibox')
 local beautiful = require('beautiful')
 local dpi = require('beautiful').xresources.apply_dpi
 local watch = require('awful.widget.watch')
+local awful = require('awful')
 
 local wifi_icon = wibox.widget.textbox()
 
 local wifi_name = wibox.widget.textbox()
 wifi_name.font = beautiful.font
+
+local wifi_tooltip = nil
 
 local function update_widget(ssid, signal_strength)
     local wifi_symbol = ''
@@ -30,13 +33,6 @@ local function update_widget(ssid, signal_strength)
     wifi_name.markup = '<span font="' .. beautiful.font .. '" foreground="'.. beautiful.peach ..'">' .. ssid .. '</span>'
 end
 
-watch([[bash -c "nmcli -t -f active,ssid,signal dev wifi | grep '^yes' | cut -d':' -f2,3"]], 2, function(_, stdout)
-    local ssid, signal_strength = stdout:match("(.*):(%d+)")
-    signal_strength = tonumber(signal_strength)
-    update_widget(ssid, signal_strength)
-    collectgarbage('collect')
-end)
-
 local wifi_widget = wibox.widget {
     wifi_icon,
     wibox.widget{
@@ -46,5 +42,21 @@ local wifi_widget = wibox.widget {
     },
     layout = wibox.layout.fixed.horizontal,
 }
+
+wifi_tooltip = awful.tooltip({
+    objects = {wifi_widget}
+})
+
+watch([[bash -c "nmcli -t -f active,ssid,signal dev wifi | grep '^yes' | cut -d':' -f2,3"]], 2, function(_, stdout)
+    local ssid, signal_strength = stdout:match("(.*):(%d+)")
+    signal_strength = tonumber(signal_strength)
+    update_widget(ssid, signal_strength)
+
+    if wifi_tooltip then
+        wifi_tooltip:set_text("ESSID: " .. ssid .. "\nSignal Strength: " .. signal_strength .. "%")
+    end
+
+    collectgarbage('collect')
+end)
 
 return wifi_widget
