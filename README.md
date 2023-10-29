@@ -7,8 +7,10 @@
 
 <img src="https://i.imgur.com/9jIAuly.png" />
 
-## Recently updated
+## Latest updated
 
+* Fixed volume error #9
+* New keybindings
 * New top bar icons
 * Tasklist (show focused application logo)
 * Click on volume to toggle mute
