@@ -3,18 +3,17 @@
 local awful = require ("awful")
 local ruled = require ("ruled")
 local gears = require ("gears")
+local naughty = require ("naughty")
+local wibox = require ("wibox")
 local beautiful = require ("beautiful")
 
 ruled.notification.connect_signal('request::rules', function()
-    -- All notifications will match this rule.
+    -- General rules
     ruled.notification.append_rule {
-        rule       = { },
-        properties = {
+        rule        = { },
+        properties  = {
             screen           = awful.screen.preferred,
-            implicit_timeout = 5,
             position         = "top_right",
-            bg               = '#1e1e2e',
-            fg               = '#ffffff',
             height           = 120,
             width            = 400,
             border_color     = "#000000",
@@ -23,5 +22,24 @@ ruled.notification.connect_signal('request::rules', function()
             opacity          = 0.8,
         }
     }
-end)
 
+    -- Urgent notifications
+    ruled.notification.append_rule {
+        rule        = { urgency = "critical" },
+        properties  = {
+            bg              = "#ff0000",
+            widget_template = {
+            }
+        }
+    }
+
+    -- Normal notifications
+    ruled.notification.append_rule {
+        rule       = { urgency = "normal" },
+        properties = {
+            bg               = '#1e1e2e',
+            fg               = '#ffffff',
+            timeout = 5,
+        }
+    }
+end)

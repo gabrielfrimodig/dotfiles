@@ -27,9 +27,9 @@ editor_cmd = terminal .. " -e " .. editor
 -- Modkey: Mod4 (Super key) or Mod1 (Alt key) 
 modkey = "Mod4"
 
-require 'bindings'
-
 require 'signals'
+
+require 'bindings'
 
 require 'config'
 
