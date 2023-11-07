@@ -9,12 +9,13 @@
 
 ## Latest updated
 
+* New icons for bar (Material Design Icon)
+* Assign color for each tag
+* Hover option on date-module
+* Hover option on wifi-module with signal strength
 * Fixed volume error #9
 * New keybindings
 * New top bar icons
-* Tasklist (show focused application logo)
-* Click on volume to toggle mute
-* Slider for volume and brightness widgets
 
 ## AwesomeWM
 
@@ -73,11 +74,3 @@ Keybindings can be found in the [wiki page](https://github.com/gabrielfrimodig/d
 
 Inspiration taken from [this reddit post](https://www.reddit.com/r/unixporn/comments/yxlylm/dwm_i_heard_catppuccin_is_the_new_cool/?utm_source=share&utm_medium=web2x&context=3).
 
-## Neovim
-Plugin manager is [packer.nvim](https://github.com/wbthomason/packer.nvim).
-
-| Plugin                                                                                | Module            |
-| ------------------------------------------------------------------------------------- | ------------------|
-| [Blankline](https://github.com/lukas-reineke/indent-blankline.nvim)                   | Blankline         |
-| [Feline](https://github.com/feline-nvim/feline.nvim)                                  | Feline            |
-| [Nightfox](https://github.com/EdenEast/nightfox.nvim)                                 | Nightfox          |
