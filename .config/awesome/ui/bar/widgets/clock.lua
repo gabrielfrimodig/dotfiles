@@ -8,7 +8,7 @@ local clock = wibox.widget.textclock("<span>%H:%M</span>")
 clock.font = beautiful.font
 
 clock_icon = wibox.widget {
-    markup = '<span font="' .. beautiful.font_icon .. '"foreground="'.. beautiful.green ..'">󰥔 </span>',
+    markup = '<span font="' .. beautiful.font_icon .. '"foreground="'.. beautiful.green ..'">󱑌 </span>',
     widget = wibox.widget.textbox,
 }
 
