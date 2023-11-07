@@ -1,9 +1,9 @@
 -- Required libraries
-local wibox = require('wibox')
-local beautiful = require('beautiful')
-local dpi = require('beautiful').xresources.apply_dpi
-local watch = require('awful.widget.watch')
-local awful = require('awful')
+local wibox = require("wibox")
+local beautiful = require("beautiful")
+local dpi = require("beautiful").xresources.apply_dpi
+local watch = require("awful.widget.watch")
+local awful = require("awful")
 
 local wifi_icon = wibox.widget.textbox()
 
@@ -16,17 +16,17 @@ local function update_widget(ssid, signal_strength)
     local wifi_symbol = ''
     
     if signal_strength >= 80 then
-        wifi_symbol = ' '
+        wifi_symbol = " "
     elseif signal_strength >= 60 then
-        wifi_symbol = ' '
+        wifi_symbol = " "
     elseif signal_strength >= 45 then
-        wifi_symbol = ' '
+        wifi_symbol = " "
     elseif signal_strength >= 40 then
-        wifi_symbol = ' '
+        wifi_symbol = " "
     elseif signal_strength >= 20 then
-        wifi_symbol = ' '
+        wifi_symbol = " "
     else
-        wifi_symbol = ' '
+        wifi_symbol = " "
     end
 
     wifi_icon.markup = '<span font="' .. beautiful.font_icon .. '" foreground="'.. beautiful.peach ..'">' .. wifi_symbol ..'</span>'

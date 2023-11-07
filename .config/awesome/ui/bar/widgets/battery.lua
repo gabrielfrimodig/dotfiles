@@ -2,9 +2,9 @@
 -- Required libraries
 local awful = require("awful")
 local wibox = require("wibox")
-local watch = require('awful.widget.watch')
-local beautiful = require('beautiful')
-local dpi = require('beautiful').xresources.apply_dpi
+local watch = require("awful.widget.watch")
+local beautiful = require("beautiful")
+local dpi = require("beautiful").xresources.apply_dpi
 
 local percentage = wibox.widget.textbox()
 percentage.font = beautiful.font
@@ -74,15 +74,15 @@ local function update_widget(widget, stdout)
 
     percentage.text = math.floor(charge) .. "%"
 
-    if status == 'Charging' then
+    if status == "Charging" then
         battery_icon.text = ' '
-    elseif status == 'Full' then
+    elseif status == "Full" then
         battery_icon.text = ''
     else
         battery_icon.text = icons[math.floor(charge / 10) * 10]
     end
 
-    collectgarbage('collect')
+    collectgarbage("collect")
 end
 
 watch('acpi -i', 10, function(widget, stdout)

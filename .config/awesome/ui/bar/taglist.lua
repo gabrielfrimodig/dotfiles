@@ -1,10 +1,10 @@
 
 -- Required libraries
-local awful = require('awful')
-local gears = require "gears"
-local wibox = require "wibox"
-local naughty = require "naughty"
-local beautiful = require "beautiful"
+local awful = require("awful")
+local gears = require("gears")
+local wibox = require("wibox")
+local naughty = require("naughty")
+local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 
 -- Each screen has its own tag table.
@@ -24,7 +24,7 @@ return function(s)
       layout = wibox.layout.fixed.horizontal,
     },
     style = {
-      font = "Jetbrains Mono 14",
+      font = beautiful.font_icon,
       spacing = dpi(10),
       fg_focus = beautiful.green,
       fg_occupied = beautiful.red,

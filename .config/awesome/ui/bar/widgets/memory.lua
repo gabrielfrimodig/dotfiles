@@ -1,9 +1,9 @@
 
 -- Required libraries 
-local wibox = require('wibox')
-local beautiful = require('beautiful')
-local watch = require('awful.widget.watch')
-local dpi = require('beautiful').xresources.apply_dpi
+local wibox = require("wibox")
+local beautiful = require("beautiful")
+local watch = require("awful.widget.watch")
+local dpi = require("beautiful").xresources.apply_dpi
 
 local memory = wibox.widget.textbox()
 memory.font = beautiful.font
@@ -27,4 +27,3 @@ return wibox.widget {
     spacing = dpi(2),
     layout = wibox.layout.fixed.horizontal
 }
-

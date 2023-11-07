@@ -1,11 +1,11 @@
 
 -- Required libraries
-local wibox = require('wibox')
-local beautiful = require('beautiful')
-local dpi = require('beautiful').xresources.apply_dpi
-local awful = require('awful')
+local wibox = require("wibox")
+local beautiful = require("beautiful")
+local dpi = require("beautiful").xresources.apply_dpi
+local awful = require("awful")
 
-local date = wibox.widget.textclock('<span>%a %d %b</span>')
+local date = wibox.widget.textclock("<span>%a %d %b</span>")
 date.font = beautiful.font
 
 date_icon = wibox.widget {

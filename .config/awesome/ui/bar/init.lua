@@ -7,20 +7,20 @@ local beautiful = require("beautiful")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
-local taglist = require 'ui.bar.taglist'
-local tasklist = require 'ui.bar.tasklist'
-local layoutbox = require 'ui.bar.layoutbox'
+local taglist = require("ui.bar.taglist")
+local tasklist = require("ui.bar.tasklist")
+local layoutbox = require("ui.bar.layoutbox")
 mylayoutbox = wibox.container.margin(layoutbox(s), dpi(4), dpi(4), dpi(4), dpi(4))
 
-local brightness = require 'ui.bar.widgets.brightness'
-local cpu_widget = require 'ui.bar.widgets.cpu'
-local clock_widget = require 'ui.bar.widgets.clock'
-local battery_widget = require 'ui.bar.widgets.battery'
-local wifi_widget = require 'ui.bar.widgets.wifi'
-local date_widget = require 'ui.bar.widgets.date'
-local memory_widget = require 'ui.bar.widgets.memory'
-local volume_widget = require 'ui.bar.widgets.volume'
-local brightness_widget = require 'ui.bar.widgets.brightness'
+local brightness = require("ui.bar.widgets.brightness")
+local cpu_widget = require("ui.bar.widgets.cpu")
+local clock_widget = require("ui.bar.widgets.clock")
+local battery_widget = require("ui.bar.widgets.battery")
+local wifi_widget = require("ui.bar.widgets.wifi")
+local date_widget = require("ui.bar.widgets.date")
+local memory_widget = require("ui.bar.widgets.memory")
+local volume_widget = require("ui.bar.widgets.volume")
+local brightness_widget = require("ui.bar.widgets.brightness")
 mylauncher = wibox.container.margin(mylauncher, dpi(2), dpi(2), dpi(2), dpi(2))
 
 local function barcontainer(widget)
@@ -40,7 +40,7 @@ local function barcontainer(widget)
             right = dpi(4),
             widget = wibox.container.margin
         },
-        bg = "#1e1e2e",
+        bg = beautiful.black,
         shape = function(cr,w,h) gears.shape.rounded_rect(cr,w,h,0) end,
         widget = wibox.container.background
     }
@@ -54,9 +54,8 @@ local function barcontainer(widget)
     }
 end
 
-
 local separator = wibox.widget{
-    markup = '<span font="' .. "JetBrains Mono 10" .. '">| </span>',
+    markup = '<span font="' .. beautiful.font .. '">| </span>',
     align  = 'center',
     valign = 'center',
     widget = wibox.widget.textbox
@@ -112,7 +111,7 @@ local function get_bar(s)
 		height = dpi(36),
 		width = s.geometry.width,
 		screen = s,
-		bg = "#1e1e2e",
+		bg = beautiful.black,
 		opacity = 0.85,
 	})
 	
