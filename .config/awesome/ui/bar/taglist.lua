@@ -9,7 +9,7 @@ local dpi = beautiful.xresources.apply_dpi
 
 -- Each screen has its own tag table.
 screen.connect_signal("request::desktop_decoration", function(s)
-    awful.tag({ "󰅬 ", " ", "󰨞 ", " ", " ", "󱞙 ", " ", " ", " "}, s, awful.layout.layouts[1])
+    awful.tag({ "󰅬 ", " ", "󰨞 ", " ", " ", "󰅩 ", "󰊢 ", " ", "󱄛 "}, s, awful.layout.layouts[1])
 end)
 
 local button = awful.button({ }, 1, function(t) t:view_only() end)

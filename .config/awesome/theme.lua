@@ -52,7 +52,7 @@ theme.tags = {
     theme.yellow,
     theme.blue,
     theme.green,
-    theme.white
+    theme.pink,
 }
 
 
