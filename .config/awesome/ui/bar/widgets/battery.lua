@@ -4,6 +4,7 @@ local awful = require("awful")
 local wibox = require("wibox")
 local watch = require("awful.widget.watch")
 local beautiful = require("beautiful")
+local tooltip = require("awful.tooltip")
 local dpi = require("beautiful").xresources.apply_dpi
 
 local percentage = wibox.widget.textbox()
@@ -40,15 +41,25 @@ local battery_widget = wibox.widget {
     layout = wibox.layout.fixed.horizontal
 }
 
+local battery_tooltip = tooltip({
+    objects = { battery_widget },
+    mode = 'outside',
+    align = 'right',
+    delay_show = 1
+})
+
 local function update_widget(widget, stdout)
     local battery_info = {}
     local capacities = {}
+    local tooltip_message = "Time remaining: Not available"
+    
     for s in stdout:gmatch('[^\r\n]+') do
-        local status, charge_str, time = string.match(s, '.+: (%a+), (%d?%d?%d)%%,?.*')
+        local status, charge_str, time = string.match(s, '.+: (%a+), (%d?%d?%d)%%, (%d+:%d+)')
         if status ~= nil then
             table.insert(battery_info, {
                 status = status,
-                charge = tonumber(charge_str)
+                charge = tonumber(charge_str),
+                time = time
             })
         else
             local cap_str = string.match(s, '.+:.+last full capacity (%d+)')
@@ -63,9 +74,11 @@ local function update_widget(widget, stdout)
 
     local charge = 0
     local status
+    local time
     for i, batt in ipairs(battery_info) do
         if batt.charge >= charge then
             status = batt.status
+            time = batt.time
         end
 
         charge = charge + batt.charge * capacities[i]
@@ -76,11 +89,21 @@ local function update_widget(widget, stdout)
 
     if status == "Charging" then
         battery_icon.text = ' '
+        if time then
+            tooltip_message = "Charging: " .. time .. " until full"
+        end
     elseif status == "Full" then
         battery_icon.text = ''
+        tooltip_message = "Battery is full"
     else
         battery_icon.text = icons[math.floor(charge / 10) * 10]
+        if time then
+            tooltip_message = "Time remaining: " .. time
+        end
     end
+
+    -- Set the tooltip text
+    battery_tooltip.text = tooltip_message
 
     collectgarbage("collect")
 end
