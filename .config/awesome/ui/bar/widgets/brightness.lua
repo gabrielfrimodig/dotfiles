@@ -47,7 +47,7 @@ brightness_slider.brightness_slider:connect_signal("property::value", function()
 end)
 
 local brightness_icon = wibox.widget {
-    markup = '<span font="' .. beautiful.font_icon .. '"foreground="'.. beautiful.red ..'">󰃠 </span>',
+    markup = '<span font="' .. beautiful.font_icon .. '"foreground="'.. beautiful.red ..'">󰖨 </span>',
     widget = wibox.widget.textbox,
 }
 
