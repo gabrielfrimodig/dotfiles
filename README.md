@@ -5,7 +5,7 @@
     <p>There's no place like <b><code>~</code></b> !</p>
 </div>
 
-<img src="https://i.imgur.com/9jIAuly.png" />
+<img src="https://i.imgur.com/mxXNwjd.png" />
 
 ## Latest updated
 
