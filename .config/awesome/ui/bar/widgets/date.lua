@@ -9,7 +9,7 @@ local date = wibox.widget.textclock("<span>%a %d %b</span>")
 date.font = beautiful.font
 
 date_icon = wibox.widget {
-    markup = '<span font="' .. beautiful.font_icon .. '"foreground="'.. beautiful.yellow ..'"> </span>',
+    markup = '<span font="' .. beautiful.font_icon .. '"foreground="'.. beautiful.yellow ..'">󰭦 </span>',
     widget = wibox.widget.textbox,
 }
 
