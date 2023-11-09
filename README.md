@@ -6,12 +6,12 @@
 </div>
 
 <div align="center">
-    <img width="500px" src="https://i.imgur.com/mxXNwjd.png" />
+    <img width="600px" src="https://i.imgur.com/mxXNwjd.png" />
 </div>
 
 <div align="center">
 
-[Latest Updates](#latest-updates) - [Defaults](#defaults) - [Installation](#installation) - [Gallery](#gallery) - [Features](#features) - [Dependencies](#dependencies) - [Keybindings](#keybindings) - [Structure](#structure) - [Credits](#credits) - [License](#license)
+[Information](#📝-information) • [Latest Updates](#🔔-latest-updates) • [Installation](#🔧-installation) • [Gallery](#📷-gallery) • [Features](#💡-features) • [Dependencies](#📥-dependencies) • [Keybindings](#🎹-keybindings) • [Structure](#🌲-structure) • [Credits](#💖-credits) • [License](#📜-license)
 
 </div>
 
@@ -27,8 +27,7 @@ Dive into the configuration files to discover a realm of efficiency and customiz
 
 Enjoy making your desktop truly your own!
 
-
-## :page_with_curl: Information
+## :memo: Information
 
 - **OS**: Fedora Workstation
 - **File manager**: Thunar
@@ -38,22 +37,7 @@ Enjoy making your desktop truly your own!
 - **Browser**: Brave
 - **Editor**: Neovim / VSCode
 
-**Features**:
-TODO: *Add some features*
-
-- Multiple screens support
-- Brightness control
-- Volume control
-- Battery widget
-- CPU widget
-- Memory widget
-- Wifi widget
-- Date widget
-- Clock widget
-- Notifications
-
-
-## :zap: Latest Updates
+## :bell: Latest Updates
 
 - New icons for bar (Material Design Icon)
 - Assign color for each tag
@@ -62,26 +46,12 @@ TODO: *Add some features*
 - New keybindings
 
 ## :wrench: Installation
-TODO: Installation script (Issue #12)
+
+TODO: Add dependencies and fix installation script (Issue #12).
 
 1. Install [git version of AwesomeWM](https://github.com/awesomeWM/awesome/)
 
-    Fedora:
-    ```bash
-    sudo dnf install awesome-git
-    ```
-
-    Debian:
-    ```bash
-    sudo apt install awesome-git
-    ```
-
-    Arch:
-    ```bash
-    yay -S awesome-git
-    ```
-
-    **For other distros**, build instructions are [here](https://github.com/awesomeWM/awesome/#building-and-installation).
+    Follow the build instructions [here](https://github.com/awesomeWM/awesome/#building-and-installation).
 
 
 2. Clone this repository
@@ -89,31 +59,38 @@ TODO: Installation script (Issue #12)
     ```bash
     git clone https://github.com/gabrielfrimodig/dotfiles.git
     ```
+
 3. Copy the configuration files to the correct directory
 
     ```bash
     cp -r dotfiles/.config/awesome ~/.config/
     ```
+
 4. Install dependencies
 
+    Fedora:
+
     ```bash
-    sudo dnf install picom feh rofi
+    sudo dnf install picom feh rofi i3lock
     ```
+
 5. Restart AwesomeWM
 
     ```bash
     awesome -r
     ```
+
 6. Enjoy!
 
 ## :camera: Gallery
 
 TODO: *Add some screenshots*
 
-## Features
-A list of features and modules that make this configuration unique.
+## :bulb: Features
 
-## Dependencies
+TODO: A list of features and modules that make this configuration unique.
+
+## :inbox_tray: Dependencies
 
 - **AwesomeWM**: [Git version](https://github.com/awesomeWM/awesome) is required
 - **Picom**
@@ -121,10 +98,12 @@ A list of features and modules that make this configuration unique.
 - **rofi**: Application launcher
 - *TODO: Add more dependencies*
 
-## Keybindings
+## :musical_keyboard: Keybindings
+
 Find the detailed keybinding list on the [wiki page](https://github.com/gabrielfrimodig/dotfiles/wiki/Keybindings).
 
 ## :evergreen_tree: Structure
+
 <details>
 <summary><code>tree ~/.config/awesome</code></summary>
 
@@ -165,6 +144,7 @@ Find the detailed keybinding list on the [wiki page](https://github.com/gabrielf
     │       └── wifi.lua
     └── init.lua
 ```
+
 </details>
 
 ## :sparkling_heart: Credits
