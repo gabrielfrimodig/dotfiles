@@ -1,11 +1,11 @@
 
 -- Required libraries
 local menubar = require("menubar")
-local awful = require('awful')
-local wibox = require('wibox')
-local gears = require('gears')
-local beautiful = require('beautiful')
-local hotkeys_popup = require('awful.hotkeys_popup')
+local awful = require("awful")
+local wibox = require("wibox")
+local gears = require("gears")
+local beautiful = require("beautiful")
+local hotkeys_popup = require("awful.hotkeys_popup")
 
 myawesomemenu = {
     {

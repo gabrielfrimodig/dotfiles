@@ -17,6 +17,8 @@ theme.bg_urgent     = "#222222"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
 
+theme.border_color  = "#000000"
+
 theme.fg_normal     = "#aaaaaa"
 theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ff0000"
@@ -41,15 +43,18 @@ theme.blue          = "#89b4fa"
 theme.lavender      = "#b4befe"
 theme.gray          = "#6c7086"
 
-theme.tags_col = {
-    "#eba0ac",
-    "#cba6f7",
-    "#f38ba8",
-    "#a6e3a1",
-    "#f9e2af",
-    "#f5c2e7",
-    "#fab387"
+theme.tags = {
+    theme.pink,
+    theme.mauve,
+    theme.red,
+    theme.maroon,
+    theme.peach,
+    theme.yellow,
+    theme.blue,
+    theme.green,
+    theme.pink,
 }
+
 
 theme.useless_gap   = dpi(0)
 --theme.border_width  = dpi(1)

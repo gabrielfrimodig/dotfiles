@@ -2,9 +2,9 @@
 -- Required libraries
 local awful = require("awful")
 local wibox = require("wibox")
-local watch = require('awful.widget.watch')
-local beautiful = require('beautiful')
-local dpi = require('beautiful').xresources.apply_dpi
+local watch = require("awful.widget.watch")
+local beautiful = require("beautiful")
+local dpi = require("beautiful").xresources.apply_dpi
 
 local percentage = wibox.widget.textbox()
 percentage.font = beautiful.font
@@ -40,9 +40,18 @@ local battery_widget = wibox.widget {
     layout = wibox.layout.fixed.horizontal
 }
 
+local battery_tooltip = require("awful.tooltip")({
+    objects = { battery_widget },
+    mode = "outside",
+    align = "right",
+    delay_show = 1
+})
+
 local function update_widget(widget, stdout)
     local battery_info = {}
     local capacities = {}
+    local tooltip_text = "Time remaining: Not available"
+    
     for s in stdout:gmatch('[^\r\n]+') do
         local status, charge_str, time = string.match(s, '.+: (%a+), (%d?%d?%d)%%,?.*')
         if status ~= nil then
@@ -74,20 +83,24 @@ local function update_widget(widget, stdout)
 
     percentage.text = math.floor(charge) .. "%"
 
-    if status == 'Charging' then
+    if status == "Charging" then
         battery_icon.text = ' '
-    elseif status == 'Full' then
+        tooltip_text = "Charging: " .. math.floor(charge) .. "%"
+    elseif status == "Full" then
         battery_icon.text = ''
+        tooltip_text = "Battery is full"
     else
         battery_icon.text = icons[math.floor(charge / 10) * 10]
+        tooltip_text = "Battery: " .. math.floor(charge) .. "%"
     end
+    battery_tooltip:set_text(tooltip_text)
 
-    collectgarbage('collect')
+    collectgarbage("collect")
 end
 
 watch('acpi -i', 10, function(widget, stdout)
     update_widget(widget, stdout)
 end, battery_widget)
 
-
 return battery_widget
+

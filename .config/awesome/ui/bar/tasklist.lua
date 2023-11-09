@@ -13,7 +13,7 @@ local tasklist = function(s)
     return awful.widget.tasklist {
         screen = s,
         filter = function(c, scr)
-            -- Only show windows on the current screen
+            -- Shows only focused windows on the current screen and ignores hidden windows.
             return awful.widget.tasklist.filter.focused(c, scr) and not c.hidden
         end,
         buttons = awful.util.table.join(
@@ -25,12 +25,15 @@ local tasklist = function(s)
                 end
             end),
             awful.button({}, 3, function()
+                -- Right click: Open a list of all clients.
                 awful.menu.client_list({theme = {width = 250}})
             end),
             awful.button({}, 4, function()
+                -- Scroll up: Focus the previous client in the list.
                 awful.client.focus.byidx(-1)
             end),
             awful.button({}, 5, function()
+                -- Scroll down: Focus the next client in the list.
                 awful.client.focus.byidx(1)
             end)
         ),

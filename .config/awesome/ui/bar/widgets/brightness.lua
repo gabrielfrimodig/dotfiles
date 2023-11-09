@@ -1,18 +1,18 @@
 
 -- Required libraries
 local awful = require("awful")
-local wibox = require('wibox')
+local wibox = require("wibox")
 local gears = require("gears")
-local beautiful = require('beautiful')
-local dpi = require('beautiful').xresources.apply_dpi
-local watch = require('awful.widget.watch')
+local beautiful = require("beautiful")
+local dpi = require("beautiful").xresources.apply_dpi
+local watch = require("awful.widget.watch")
 
 local brightness = wibox.widget.textbox()
 brightness.font = beautiful.font
 
 local brightness_slider = wibox.widget {
     {
-        id = 'brightness_slider',
+        id = "brightness_slider",
         widget = wibox.widget.slider,
         bar_shape = gears.shape.rounded_rect,
         bar_height = dpi(2),
@@ -47,7 +47,7 @@ brightness_slider.brightness_slider:connect_signal("property::value", function()
 end)
 
 local brightness_icon = wibox.widget {
-    markup = '<span font="' .. beautiful.font_icon .. '"foreground="'.. beautiful.red ..'">󰃠 </span>',
+    markup = '<span font="' .. beautiful.font_icon .. '"foreground="'.. beautiful.red ..'">󰖨 </span>',
     widget = wibox.widget.textbox,
 }
 
