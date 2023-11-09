@@ -11,7 +11,9 @@
 
 <div align="center">
 
-[Information](#📝-information) • [Latest Updates](#🔔-latest-updates) • [Installation](#🔧-installation) • [Gallery](#📷-gallery) • [Features](#💡-features) • [Dependencies](#📥-dependencies) • [Keybindings](#🎹-keybindings) • [Structure](#🌲-structure) • [Credits](#💖-credits) • [License](#📜-license)
+[Information](#memo-information) • [Latest Updates](#bell-latest-updates) • [Installation](#wrench-installation) • [Gallery](#camera-gallery) • [Features](#bulb-features) • [Dependencies](#inbox_tray-dependencies) • [Keybindings](#musical_keyboard-keybindings) • [Structure](#evergreen_tree-structure) • [Credits](#sparkling_heart-credits) • [License](#scroll-license)
+
+[Information](#📝-information) • [Latest Updates](#🔔-latest-updates) • [Installation](#🔧-installation) • [Gallery](#📷-gallery) • [Features](#💡-features) • [Dependencies](#📥-dependencies) • [Keybindings](#🎹-keybindings) • [Structure](#🌲-structure) • [Credits](#💖-credits) [License](#)
 
 </div>
 
