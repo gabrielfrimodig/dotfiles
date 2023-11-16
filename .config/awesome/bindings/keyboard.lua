@@ -54,7 +54,7 @@ awful.keyboard.append_global_keybindings({
             text = "Screenshot will be saved"
         })
     end, {description = "selected screenshot", group = "launcher"}),
-    awful.key({ "Control", "Shift"}, "Print", function ()
+    awful.key({ "Control"}, "Print", function ()
         filepath = "~/Pictures/Screenshots/" .. os.date("%Y-%m-%d_%H:%M:%S") .. ".png"
         awful.spawn.with_shell("maim -s --format png -u | xclip -selection clipboard -t image/png -i")
         naughty.notify ({
