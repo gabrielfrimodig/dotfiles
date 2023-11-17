@@ -77,16 +77,16 @@ awful.keyboard.append_global_keybindings({
 -- System
 awful.keyboard.append_global_keybindings({
     awful.key({}, "XF86AudioRaiseVolume", function ()
-        awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ +2000")
+        awful.spawn("pamixer --increase 5")
     end, {description = "raise volume", group = "control / media"}),
 	awful.key({}, "XF86AudioLowerVolume", function ()
-        awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ -2000")
+        awful.spawn("pamixer --decrease 5")
     end, {description = "lower volume", group = "control / media"}),
     awful.key({ }, "XF86AudioMute", function ()
-        awful.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")
+        awful.spawn("pamixer --toggle-mute")
     end, {description = "toggle volume", group = "control / media"}),
 	awful.key({}, "XF86AudioMicMute", function ()
-        awful.spawn("pactl set-source-mute @DEFAULT_SOURCE@ toggle")
+        awful.spawn("pamixer --default-source -t")
     end, {description = "toggle mic", group = "control / media"}),
 	awful.key({}, "XF86AudioPlay", function()
         awful.spawn("playerctl play-pause", false)
