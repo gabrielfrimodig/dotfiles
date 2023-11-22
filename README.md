@@ -39,11 +39,11 @@ Enjoy making your desktop truly your own!
 
 ## :bell: Latest Updates
 
+- Powermenu implementation
 - Replace pactl with pamixer
 - New icons for bar (Material Design Icon)
 - Assign color for each tag
 - Hover option on date-module and wifi-module with signal strength
-- Fixed volume error #9
 
 ## :wrench: Installation
 
@@ -80,7 +80,11 @@ TODO: Add dependencies and fix installation script (Issue #12).
 
 ## :camera: Gallery
 
-TODO: *Add some screenshots*
+<div align="center">
+    <em>Powermenu</em>
+    <br>
+    <img width="600px" src="https://i.imgur.com/Kpq8Nqa.png" alt="Powermenu" />
+</div>
 
 ## :bulb: Features
 
@@ -93,6 +97,9 @@ TODO: A list of features and modules that make this configuration unique.
 - **feh**: For setting wallpaper
 - **rofi**: Application launcher
 - **Pamixer**: Managing sound and mic
+- **acpi**: Battery Information 
+- **xbacklight**: Screen brightness
+- **maim**: Screenshot tool
 - *TODO: Add more dependencies*
 
 ## :musical_keyboard: Keybindings
