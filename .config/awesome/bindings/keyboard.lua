@@ -1,4 +1,3 @@
-
 -- Required libraries
 local awful = require("awful")
 local gears = require("gears")
@@ -6,7 +5,6 @@ local wibox = require("wibox")
 local naughty = require("naughty")
 local beautiful = require("beautiful")
 local hotkeys_popup = require("awful.hotkeys_popup")
-local powermenu = require("ui.powermenu")
 
 -- Default modkey.
 -- Modkey: Mod4 (Super key) or Mod1 (Alt key) 
@@ -23,10 +21,10 @@ awful.keyboard.append_global_keybindings({
         awful.util.spawn("i3lock")
     end, {description = "lockscreen", group = "awesome"}),
     awful.key({ modkey, "Shift"     }, "q", function()
-        powermenu.visible = not powermenu.visible
+        awesome.emit_signal("module::powermenu:show")
     end, {description = "powermenu", group = "awesome"}),
     awful.key({ modkey }, "Escape", function()
-        powermenu.visible = not powermenu.visible
+        awesome.emit_signal("module::powermenu:show")
     end, {description = "powermenu", group = "awesome"}),
 })
 

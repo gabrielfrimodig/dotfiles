@@ -104,4 +104,30 @@ powermenu:setup {
     widget = wibox.container.background,
 }
 
+local powermenu_esc = awful.keygrabber {
+    autostart = false,
+    stop_event = 'release',
+    keypressed_callback = function(self, mod, key, command)
+        if key == 'Escape' then
+            awesome.emit_signal("module::powermenu:hide")
+        end
+    end
+}
+
+awesome.connect_signal(
+    "module::powermenu:show",
+    function()
+        powermenu.visible = true
+        powermenu_esc:start()
+    end
+)
+
+awesome.connect_signal(
+    "module::powermenu:hide",
+    function()
+        powermenu.visible = false
+        powermenu_esc:stop()
+    end
+)
+
 return powermenu
