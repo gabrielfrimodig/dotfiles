@@ -1,3 +1,4 @@
+-- Required libraries
 local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
@@ -24,6 +25,7 @@ local powermenu = awful.popup {
     },
     ontop = true,
     visible = false,
+    focus = false,
     placement = awful.placement.centered,
     minimum_width = awful.screen.focused().geometry.width,
     minimum_height = awful.screen.focused().geometry.height,
