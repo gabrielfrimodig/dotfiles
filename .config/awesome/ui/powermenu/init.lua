@@ -14,10 +14,9 @@ local reboot = create_button("󰑓", "Reboot", "reboot", beautiful.yellow)
 local shutdown = create_button("󰐥", "Shutdown", "shutdown now", beautiful.green)
 
 local powermenu = awful.popup {
-    screen = s,
+    screen = screen.primary,
     widget = {
         {
-            powermenu_layout,
             widget = wibox.container.margin,
             margins = dpi(20)
         },
@@ -110,7 +109,7 @@ local powermenu_esc = awful.keygrabber {
     autostart = false,
     stop_event = 'release',
     keypressed_callback = function(self, mod, key, command)
-        if key == 'Escape' then
+        if key == 'Escape' or key == 'q' then
             awesome.emit_signal("module::powermenu:hide")
         end
     end
