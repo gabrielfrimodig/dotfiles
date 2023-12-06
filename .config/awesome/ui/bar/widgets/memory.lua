@@ -1,5 +1,4 @@
-
--- Required libraries 
+-- Required libraries
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local watch = require("awful.widget.watch")
@@ -13,14 +12,14 @@ watch([[bash -c "free -h | awk '/^Mem/ { print $3 }' | sed s/i//g"]], 2, functio
 end)
 
 memory_icon = wibox.widget {
-	markup = '<span font="' .. beautiful.font_icon .. '"foreground="'.. beautiful.pink ..'"> </span>',
-	widget = wibox.widget.textbox,
+    markup = '<span font="' .. beautiful.font_icon .. '"foreground="' .. beautiful.pink .. '"> </span>',
+    widget = wibox.widget.textbox,
 }
 
 return wibox.widget {
-	memory_icon,
-    wibox.widget{
-        memory, 
+    memory_icon,
+    wibox.widget {
+        memory,
         fg = beautiful.pink,
         widget = wibox.container.background
     },

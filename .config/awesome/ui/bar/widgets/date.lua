@@ -1,4 +1,3 @@
-
 -- Required libraries
 local wibox = require("wibox")
 local beautiful = require("beautiful")
@@ -9,7 +8,7 @@ local date = wibox.widget.textclock("<span>%a %d %b</span>")
 date.font = beautiful.font
 
 date_icon = wibox.widget {
-    markup = '<span font="' .. beautiful.font_icon .. '"foreground="'.. beautiful.yellow ..'">󰭦 </span>',
+    markup = '<span font="' .. beautiful.font_icon .. '"foreground="' .. beautiful.yellow .. '">󰭦 </span>',
     widget = wibox.widget.textbox,
 }
 
@@ -19,7 +18,7 @@ local month_calendar = awful.widget.calendar_popup.month({
     font = beautiful.font,
     long_weekdays = true,
     margin = dpi(10),
-    style_month = { padding = dpi(10), border_width = 0, bg_color = beautiful.bg_normal },
+    style_month = { padding = dpi(10), border_width = dpi(1), bg_color = beautiful.black },
     style_header = { border_width = 0, bg_color = beautiful.bg_normal },
     style_weekday = { border_width = 0, bg_color = beautiful.bg_normal },
     style_normal = { border_width = 0, bg_color = beautiful.bg_normal },
@@ -38,8 +37,8 @@ month_calendar:attach(date, nil, {
 
 return wibox.widget {
     date_icon,
-    wibox.widget{
-        date, 
+    wibox.widget {
+        date,
         fg = beautiful.yellow,
         widget = wibox.container.background
     },

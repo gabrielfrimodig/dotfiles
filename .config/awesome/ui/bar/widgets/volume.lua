@@ -1,62 +1,27 @@
-
 -- Required libraries
 local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
 local beautiful = require("beautiful")
-local dpi = require("beautiful").xresources.apply_dpi
+local dpi = beautiful.xresources.apply_dpi
 local watch = require("awful.widget.watch")
 
 local volume = wibox.widget.textbox()
 volume.font = beautiful.font
 
-local volume_slider = wibox.widget {
-    {
-        id = "volume_slider",
-        widget = wibox.widget.slider,
-        bar_shape = gears.shape.rounded_rect,
-        bar_height = dpi(2),
-        bar_color = beautiful.pink,
-        handle_color = beautiful.pink,
-        handle_shape = gears.shape.circle,
-        handle_width = dpi(10),
-        handle_border_color = beautiful.pink,
-        handle_border_width = dpi(1),
-        maximum = 100,
-        minimum = 0,
-        value = 50,
-        forced_height = dpi(10),
-        forced_width = dpi(100),
-        widget = wibox.widget.slider,
-    },
-    margins = dpi(5),
-    visible = false,
-    widget = wibox.container.margin,
-}
+local volume_icon = wibox.widget.textbox()
 
--- Function to update the volume level based on the slider value
-local function update_volume(slider_value)
-    awful.spawn('pactl set-sink-volume 0 ' .. slider_value .. '%')
-    volume.text = slider_value .. '%'
-end
-
--- Connect signals to update the volume level with the slider and keyboard
-volume_slider.volume_slider:connect_signal("property::value", function()
-    local slider_value = volume_slider.volume_slider:get_value()
-    update_volume(slider_value)
-end)
-
-local volume_icon = wibox.widget {
-    markup = '<span font="' .. beautiful.font_icon .. '"foreground="'.. beautiful.pink ..'">墳 </span>',
-    widget = wibox.widget.textbox,
+local volume_icon_popup = wibox.widget {
+    markup = '<span font="Ubuntu Nerd Font 110" foreground="' .. beautiful.white .. '">' .. "󰕾" .. '</span>',
+    align = "center",
+    widget = wibox.widget.textbox
 }
 
 local volume_widget = wibox.widget {
     {
         layout = wibox.layout.fixed.horizontal,
         volume_icon,
-        volume_slider,
-        wibox.widget{
+        {
             volume,
             fg = beautiful.pink,
             widget = wibox.container.background
@@ -66,44 +31,125 @@ local volume_widget = wibox.widget {
     layout = wibox.layout.fixed.horizontal,
 }
 
-volume_widget:connect_signal("mouse::enter", function()
-    volume_slider.visible = true
-end)
+local volume_slider = wibox.widget {
+    bar_shape = gears.shape.rounded_rect,
+    bar_height = dpi(3),
+    bar_color = beautiful.white,
+    handle_color = beautiful.white,
+    handle_shape = gears.shape.circle,
+    handle_width = dpi(15),
+    handle_border_width = dpi(1),
+    handle_border_color = beautiful.border_color,
+    value = 50,
+    maximum = 100,
+    forced_height = dpi(20),
+    forced_width = dpi(140),
+    widget = wibox.widget.slider
+}
 
-volume_widget:connect_signal("mouse::leave", function()
-    volume_slider.visible = false
-end)
+local volume_popup = awful.popup {
+    screen = screen.primary,
+    widget = {
+        {
+            widget = wibox.container.margin,
+            margins = dpi(20),
+        },
+        widget = wibox.container.place,
+    },
+    ontop = true,
+    visible = false,
+    focus = false,
+    placement = awful.placement.centered,
+    shape = gears.shape.rounded_rect,
+    bg = beautiful.bg_popup or beautiful.bg_normal,
+}
 
--- Toggle the volume when widget is clicked
-volume:connect_signal("button::press", function(_, _, _, button)
-    if (button == 1) then
-        awful.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")
+local popup_timer = gears.timer {
+    timeout = 2,
+    single_shot = true,
+    callback = function()
+        volume_popup.visible = false
     end
-end)
+}
 
+local volume_slider_with_margins = wibox.container.margin(volume_slider, dpi(40), dpi(40), dpi(0), dpi(20))
+
+local function set_icon(is_muted)
+    local icon = is_muted == "true" and "婢" or "墳"
+
+    -- Update the volume_icon markup
+    volume_icon.markup = string.format('<span font="Ubuntu Nerd Font 14" foreground="%s">%s</span>',
+                                       beautiful.pink, icon)
+
+    -- Update the volume_icon_popup markup with different style
+    volume_icon_popup.markup = string.format('<span font="Ubuntu Nerd Font 110" foreground="%s">%s</span>',
+                                           beautiful.white, icon)
+end
+
+volume_popup:setup {
+    {
+        {  
+            volume_icon_popup,
+            {
+                volume_slider_with_margins,
+                widget = wibox.container.margin,
+            },
+            layout = wibox.layout.fixed.vertical
+        },
+        layout = wibox.container.place
+    },
+    widget = wibox.container.background,
+}
+
+volume:connect_signal("button::press", function(_, _, _, button)
+    if button == 1 then awful.spawn("pamixer --toggle-mute") end
+end)
 
 local function update_volume_widget()
-    awful.spawn.easy_async([[bash -c "amixer get Master | grep -E '(Left|Mono):' | awk -F'[][]' '{print $2, $4}'"]], function(stdout)
-        local volume_level, is_muted = string.match(stdout, "(%d+)%% (%a+)")
- 
-        if volume_level and is_muted then
-            -- Update the volume text
-            volume.text = volume_level .. '%'
- 
-            -- Update the volume slider
-            volume_slider.volume_slider:set_value(tonumber(volume_level))
- 
-            -- Update the volume icon
-            if is_muted == "off" then
-                volume_icon.markup = '<span font="' .. beautiful.font_icon .. '" foreground="' .. beautiful.pink .. '">婢 </span>'
+    awful.spawn.easy_async("pamixer --get-volume --get-mute", function(stdout)
+        local is_muted, volume_level = stdout:match("(%a+)%s(%d+)")
+        if volume_level then
+            volume.text = ' ' .. volume_level .. '%'
+            volume_slider.value = tonumber(volume_level)
+            if tonumber(volume_level) >= 90 then
+                volume_slider.bar_color = beautiful.red
+                volume_slider.handle_color = beautiful.red
+            elseif tonumber(volume_level) >= 70 then
+                volume_slider.bar_color = beautiful.peach
+                volume_slider.handle_color = beautiful.peach
             else
-                volume_icon.markup = '<span font="' .. beautiful.font_icon .. '" foreground="' .. beautiful.pink .. '">墳 </span>'
+                volume_slider.bar_color = beautiful.white
+                volume_slider.handle_color = beautiful.white
             end
         end
+        set_icon(is_muted)
     end)
 end
 
-watch([[bash -c "amixer get Master | grep -E '(Left|Mono):' | awk -F'[][]' '{print $2, $4}'"]], 1, function(_, stdout)
+local function show_volume_popup()
+    volume_popup.visible = true
+    popup_timer:start()
+end
+
+awesome.connect_signal("volume::increase", function()
+    awful.spawn("pamixer --increase 5", false)
+    update_volume_widget()
+    show_volume_popup()
+end)
+
+awesome.connect_signal("volume::decrease", function()
+    awful.spawn("pamixer --decrease 5", false)
+    update_volume_widget()
+    show_volume_popup()
+end)
+
+awesome.connect_signal("volume::mute", function()
+    awful.spawn("pamixer --toggle-mute", false)
+    update_volume_widget()
+    show_volume_popup()
+end)
+
+watch("pamixer --get-volume --get-mute", 1, function()
     update_volume_widget()
     collectgarbage("collect")
 end)

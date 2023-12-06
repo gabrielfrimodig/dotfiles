@@ -39,11 +39,11 @@ Enjoy making your desktop truly your own!
 
 ## :bell: Latest Updates
 
+- Powermenu implementation
+- Replace pactl with pamixer
 - New icons for bar (Material Design Icon)
 - Assign color for each tag
 - Hover option on date-module and wifi-module with signal strength
-- Fixed volume error #9
-- New keybindings
 
 ## :wrench: Installation
 
@@ -68,11 +68,7 @@ TODO: Add dependencies and fix installation script (Issue #12).
 
 4. Install dependencies
 
-    Fedora:
-
-    ```bash
-    sudo dnf install picom feh rofi i3lock
-    ```
+    *TODO*
 
 5. Restart AwesomeWM
 
@@ -84,7 +80,11 @@ TODO: Add dependencies and fix installation script (Issue #12).
 
 ## :camera: Gallery
 
-TODO: *Add some screenshots*
+<div align="center">
+    <em>Powermenu</em>
+    <br>
+    <img width="600px" src="https://i.imgur.com/Kpq8Nqa.png" alt="Powermenu" />
+</div>
 
 ## :bulb: Features
 
@@ -93,9 +93,13 @@ TODO: A list of features and modules that make this configuration unique.
 ## :inbox_tray: Dependencies
 
 - **AwesomeWM**: [Git version](https://github.com/awesomeWM/awesome) is required
-- **Picom**
+- **Picom**: [yshui/picom](https://github.com/yshui/picom)
 - **feh**: For setting wallpaper
 - **rofi**: Application launcher
+- **Pamixer**: Managing sound and mic
+- **acpi**: Battery Information 
+- **xbacklight**: Screen brightness
+- **maim**: Screenshot tool
 - *TODO: Add more dependencies*
 
 ## :musical_keyboard: Keybindings

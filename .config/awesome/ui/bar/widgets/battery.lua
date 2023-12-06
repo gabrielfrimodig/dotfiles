@@ -1,6 +1,4 @@
-
 -- Required libraries
-local awful = require("awful")
 local wibox = require("wibox")
 local watch = require("awful.widget.watch")
 local beautiful = require("beautiful")
@@ -32,7 +30,7 @@ local battery_widget = wibox.widget {
         widget = wibox.container.background
     },
     {
-        percentage, 
+        percentage,
         fg = beautiful.mauve,
         widget = wibox.container.background
     },
@@ -51,7 +49,7 @@ local function update_widget(widget, stdout)
     local battery_info = {}
     local capacities = {}
     local tooltip_text = "Time remaining: Not available"
-    
+
     for s in stdout:gmatch('[^\r\n]+') do
         local status, charge_str, time = string.match(s, '.+: (%a+), (%d?%d?%d)%%,?.*')
         if status ~= nil then
@@ -103,4 +101,3 @@ watch('acpi -i', 10, function(widget, stdout)
 end, battery_widget)
 
 return battery_widget
-

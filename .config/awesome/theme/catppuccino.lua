@@ -11,6 +11,9 @@ local theme = {}
 theme.font          = "JetBrains Mono 10"
 theme.font_icon     = "Jetbrains Mono 14"
 
+theme.ubuntu_icon   = "Ubuntu Nerd Font 14"
+theme.popup_icon    = "Ubuntu Nerd Font 110"
+
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#535d6c"
 theme.bg_urgent     = "#222222"
@@ -42,6 +45,10 @@ theme.sapphire      = "#74c7ec"
 theme.blue          = "#89b4fa"
 theme.lavender      = "#b4befe"
 theme.gray          = "#6c7086"
+
+theme.test          = "#2a2a3b"
+
+theme.bg_popup      = "#2626262e"
 
 theme.tags = {
     theme.pink,
