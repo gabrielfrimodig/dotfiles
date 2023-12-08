@@ -7,12 +7,14 @@ pcall(require, "luarocks.loader")
 require("awful.autofocus")
 
 -- Standard awesome library
+local awful = require("awful")
 local beautiful = require("beautiful")
 
 -- Theme handling library
 local themes = {
     "catppuccino",
     "gruvbox",
+    "seashell",
 }
 
 local chosen_theme = themes[1]
@@ -38,4 +40,5 @@ require 'rules'
 
 require 'ui'
 
-require 'autostart'
+-- Autostart
+awful.spawn.with_shell(string.format("%s/.config/awesome/autostart.sh", os.getenv("HOME")))
