@@ -23,7 +23,7 @@ local volume_widget = wibox.widget {
         volume_icon,
         {
             volume,
-            fg = beautiful.pink,
+            fg = beautiful.fg_widget1,
             widget = wibox.container.background
         },
     },
@@ -61,7 +61,7 @@ local volume_popup = awful.popup {
     focus = false,
     placement = awful.placement.centered,
     shape = gears.shape.rounded_rect,
-    bg = beautiful.bg_popup or beautiful.bg_normal,
+    bg = beautiful.bg_popup or beautiful.black,
 }
 
 local popup_timer = gears.timer {
@@ -74,21 +74,52 @@ local popup_timer = gears.timer {
 
 local volume_slider_with_margins = wibox.container.margin(volume_slider, dpi(40), dpi(40), dpi(0), dpi(20))
 
+local function get_current_audio_output_device()
+    local handle = io.popen("pactl list sinks")
+    local result = handle:read("*a")
+    handle:close()
+
+    for line in result:gmatch("[^\r\n]+") do
+        if line:find("Active Port:") then
+            local port = line:match("Active Port: (.+)")
+            if port and port:find("headphones") then
+                return "headphones"
+            else
+                return "speakers"
+            end
+        end
+    end
+
+    return "unknown"
+end
+
+
 local function set_icon(is_muted)
-    local icon = is_muted == "true" and "婢" or "墳"
+    local device = get_current_audio_output_device()
+    local icon
+
+    if is_muted == "true" and device == "headphones" then
+        icon = "󰟎"
+    elseif is_muted == "true" then
+        icon = "婢"
+    elseif device == "headphones" then
+        icon = "󰋋"
+    else
+        icon = "墳"
+    end
 
     -- Update the volume_icon markup
     volume_icon.markup = string.format('<span font="Ubuntu Nerd Font 14" foreground="%s">%s</span>',
-                                       beautiful.pink, icon)
+        beautiful.fg_widget1, icon)
 
     -- Update the volume_icon_popup markup with different style
     volume_icon_popup.markup = string.format('<span font="Ubuntu Nerd Font 110" foreground="%s">%s</span>',
-                                           beautiful.white, icon)
+        beautiful.white, icon)
 end
 
 volume_popup:setup {
     {
-        {  
+        {
             volume_icon_popup,
             {
                 volume_slider_with_margins,
@@ -115,8 +146,8 @@ local function update_volume_widget()
                 volume_slider.bar_color = beautiful.red
                 volume_slider.handle_color = beautiful.red
             elseif tonumber(volume_level) >= 70 then
-                volume_slider.bar_color = beautiful.peach
-                volume_slider.handle_color = beautiful.peach
+                volume_slider.bar_color = beautiful.bar_warning
+                volume_slider.handle_color = beautiful.bar_warning
             else
                 volume_slider.bar_color = beautiful.white
                 volume_slider.handle_color = beautiful.white
