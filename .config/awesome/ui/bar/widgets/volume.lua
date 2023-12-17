@@ -101,11 +101,11 @@ local function set_icon(is_muted)
     if is_muted == "true" and device == "headphones" then
         icon = "󰟎"
     elseif is_muted == "true" then
-        icon = "婢"
+        icon = "󰖁"
     elseif device == "headphones" then
         icon = "󰋋"
     else
-        icon = "墳"
+        icon = "󰕾"
     end
 
     -- Update the volume_icon markup
