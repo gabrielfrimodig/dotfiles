@@ -72,19 +72,6 @@ local popup_timer = gears.timer {
 
 local brightness_slider_with_margins = wibox.container.margin(brightness_slider, dpi(40), dpi(40), dpi(0), dpi(20))
 
---[[local brightness_icon_popup = wibox.widget {
-    markup = string.format('<span font="%s" foreground="%s">󰖨</span>', beautiful.popup_icon, beautiful.white),
-    align = "center",
-    widget = wibox.widget.textbox
-}
-
-local brightness_icon = wibox.widget {
-    markup = string.format('<span font="%s" foreground="%s">󰖨 </span>', beautiful.widget_icon, beautiful.fg_brightness),
-    widget = wibox.widget.textbox,
-}
-]]
-
-
 brightness_popup:setup {
     {
         {
