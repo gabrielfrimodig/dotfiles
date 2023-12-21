@@ -6,7 +6,28 @@ local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 
 local brightness = wibox.widget.textbox()
-brightness.font = beautiful.font
+brightness.font = beautiful.widget_text
+local brightness_icon = wibox.widget.textbox()
+brightness_icon.font = beautiful.widget_icon
+brightness_icon.text = "󰖨"
+local brightness_icon_popup = wibox.widget.textbox()
+brightness_icon_popup.font = beautiful.popup_icon
+brightness_icon_popup.text = "󰖨"
+
+local brightness_widget = wibox.widget {
+    {
+        brightness_icon,
+        fg = beautiful.fg_brightness,
+        widget = wibox.container.background
+    },
+    {
+        brightness,
+        fg = beautiful.fg_brightness,
+        widget = wibox.container.background
+    },
+    spacing = dpi(4),
+    layout = wibox.layout.fixed.horizontal,
+}
 
 local brightness_slider = wibox.widget {
     bar_shape = gears.shape.rounded_rect,
@@ -24,31 +45,6 @@ local brightness_slider = wibox.widget {
     widget = wibox.widget.slider
 }
 
-local brightness_icon_popup = wibox.widget {
-    markup = '<span font="Ubuntu Nerd Font 110" foreground="' .. beautiful.white .. '">' .. "󰖨" .. '</span>',
-    align = "center",
-    widget = wibox.widget.textbox
-}
-
-local brightness_icon = wibox.widget {
-    markup = '<span font="' .. beautiful.font_icon .. '"foreground="' .. beautiful.red .. '">󰖨 </span>',
-    widget = wibox.widget.textbox,
-}
-
-local brightness_widget = wibox.widget {
-    {
-        layout = wibox.layout.fixed.horizontal,
-        brightness_icon,
-        wibox.widget {
-            brightness,
-            fg = beautiful.red,
-            widget = wibox.container.background
-        },
-    },
-    spacing = dpi(1),
-    layout = wibox.layout.fixed.horizontal,
-}
-
 local brightness_popup = awful.popup {
     screen = screen.primary,
     widget = {
@@ -63,7 +59,7 @@ local brightness_popup = awful.popup {
     focus = false,
     placement = awful.placement.centered,
     shape = gears.shape.rounded_rect,
-    bg = beautiful.bg_popup or beautiful.bg_normal,
+    bg = beautiful.bg_popup or beautiful.black,
 }
 
 local popup_timer = gears.timer {
@@ -76,10 +72,27 @@ local popup_timer = gears.timer {
 
 local brightness_slider_with_margins = wibox.container.margin(brightness_slider, dpi(40), dpi(40), dpi(0), dpi(20))
 
+--[[local brightness_icon_popup = wibox.widget {
+    markup = string.format('<span font="%s" foreground="%s">󰖨</span>', beautiful.popup_icon, beautiful.white),
+    align = "center",
+    widget = wibox.widget.textbox
+}
+
+local brightness_icon = wibox.widget {
+    markup = string.format('<span font="%s" foreground="%s">󰖨 </span>', beautiful.widget_icon, beautiful.fg_brightness),
+    widget = wibox.widget.textbox,
+}
+]]
+
+
 brightness_popup:setup {
     {
         {
-            brightness_icon_popup,
+            {
+                brightness_icon_popup,
+                fg = beautiful.white,
+                widget = wibox.container.background
+            },
             {
                 brightness_slider_with_margins,
                 widget = wibox.container.margin,
@@ -91,6 +104,14 @@ brightness_popup:setup {
     widget = wibox.container.background,
 }
 
+brightness_icon_popup.align = "center"
+brightness_icon_popup.valign = "center"
+
+--- update_brightness_widget: Updates the brightness widget with the current screen brightness level.
+-- This function uses the 'xbacklight -get' shell command to fetch the current screen brightness.
+-- The output is parsed to obtain the brightness level as a numerical value.
+-- The function then updates the 'brightness_slider' value to reflect the current brightness.
+-- The brightness level is rounded to the nearest integer for better representation in the UI.
 local function update_brightness_widget()
     awful.spawn.easy_async("xbacklight -get", function(stdout)
         local brightness_level = math.floor(stdout + 0.5)
@@ -98,6 +119,10 @@ local function update_brightness_widget()
     end)
 end
 
+--- show_brighntess_popup: Displays the brightness popup and starts a timer for auto-hiding.
+-- This function makes the brightness popup visible on the screen.
+-- It also starts a timer ('popup_timer') which will automatically hide the popup after a set duration.
+-- This function provides visual feedback to the user.
 local function show_brightness_popup()
     brightness_popup.visible = true
     popup_timer:start()

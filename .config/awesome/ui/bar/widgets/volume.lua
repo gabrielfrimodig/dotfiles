@@ -2,33 +2,30 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
+local watch = require("awful.widget.watch")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
-local watch = require("awful.widget.watch")
 
 local volume = wibox.widget.textbox()
-volume.font = beautiful.font
-
+volume.font = beautiful.widget_text
 local volume_icon = wibox.widget.textbox()
-
-local volume_icon_popup = wibox.widget {
-    markup = '<span font="Ubuntu Nerd Font 110" foreground="' .. beautiful.white .. '">' .. "󰕾" .. '</span>',
-    align = "center",
-    widget = wibox.widget.textbox
-}
+volume_icon.font = beautiful.widget_icon
+local volume_icon_popup = wibox.widget.textbox()
+volume_icon_popup.font = beautiful.popup_icon
 
 local volume_widget = wibox.widget {
     {
-        layout = wibox.layout.fixed.horizontal,
         volume_icon,
-        {
-            volume,
-            fg = beautiful.fg_widget1,
-            widget = wibox.container.background
-        },
+        fg = beautiful.fg_volume,
+        widget = wibox.container.background
     },
-    spacing = dpi(1),
-    layout = wibox.layout.fixed.horizontal,
+    {
+        volume,
+        fg = beautiful.fg_volume,
+        widget = wibox.container.background
+    },
+    spacing = dpi(4),
+    layout = wibox.layout.fixed.horizontal
 }
 
 local volume_slider = wibox.widget {
@@ -74,6 +71,9 @@ local popup_timer = gears.timer {
 
 local volume_slider_with_margins = wibox.container.margin(volume_slider, dpi(40), dpi(40), dpi(0), dpi(20))
 
+--- get_current_audio_output_device: Determines the current audio output device used by the system.
+-- This function executes a shell command using 'pactl' to list audio sinks and parses the output to find the active port.
+-- @return A string indicating the current audio output device. Either 'headphones', 'speakers', or 'unknown'.
 local function get_current_audio_output_device()
     local handle = io.popen("pactl list sinks")
     local result = handle:read("*a")
@@ -93,7 +93,10 @@ local function get_current_audio_output_device()
     return "unknown"
 end
 
-
+--- set_icon: Updates the volume icon based on the mute status and the current audio output device.
+-- Different icons are used to represent the combinations of mute status and device type.
+-- @param is_muted A string indicating the mute status. Possible values are "true" (muted) or "false" (unmuted).
+-- The function updates theme variables 'volume_icon' and 'volume_icon_popup' with the appropriate icon.
 local function set_icon(is_muted)
     local device = get_current_audio_output_device()
     local icon
@@ -108,19 +111,18 @@ local function set_icon(is_muted)
         icon = "󰕾"
     end
 
-    -- Update the volume_icon markup
-    volume_icon.markup = string.format('<span font="Ubuntu Nerd Font 14" foreground="%s">%s</span>',
-        beautiful.fg_widget1, icon)
-
-    -- Update the volume_icon_popup markup with different style
-    volume_icon_popup.markup = string.format('<span font="Ubuntu Nerd Font 110" foreground="%s">%s</span>',
-        beautiful.white, icon)
+    volume_icon.text = icon
+    volume_icon_popup.text = icon
 end
 
 volume_popup:setup {
     {
         {
-            volume_icon_popup,
+            {
+                volume_icon_popup,
+                fg = beautiful.white,
+                widget = wibox.container.background
+            },
             {
                 volume_slider_with_margins,
                 widget = wibox.container.margin,
@@ -132,50 +134,64 @@ volume_popup:setup {
     widget = wibox.container.background,
 }
 
+volume_icon_popup.align = "center"
+volume_icon_popup.valign = "center"
+
 volume:connect_signal("button::press", function(_, _, _, button)
-    if button == 1 then awful.spawn("pamixer --toggle-mute") end
+    if button == 1 then awful.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle") end
 end)
 
+--- update_volume_widget: Updates the volume widget with the current volume level and mute status.
+-- This function executes shell commands to get the current volume level and mute status of the default sink using 'pactl'.
+-- It parses the output to extract the volume level and mute status.
+-- The volume level is updated as well as the volume bar (popup). The color of the volume slider (popup) is updated based on the volume level.
 local function update_volume_widget()
-    awful.spawn.easy_async("pamixer --get-volume --get-mute", function(stdout)
-        local is_muted, volume_level = stdout:match("(%a+)%s(%d+)")
-        if volume_level then
-            volume.text = ' ' .. volume_level .. '%'
-            volume_slider.value = tonumber(volume_level)
-            if tonumber(volume_level) >= 90 then
-                volume_slider.bar_color = beautiful.red
-                volume_slider.handle_color = beautiful.red
-            elseif tonumber(volume_level) >= 70 then
-                volume_slider.bar_color = beautiful.bar_warning
-                volume_slider.handle_color = beautiful.bar_warning
-            else
-                volume_slider.bar_color = beautiful.white
-                volume_slider.handle_color = beautiful.white
+    awful.spawn.easy_async_with_shell("pactl get-sink-volume @DEFAULT_SINK@; pactl get-sink-mute @DEFAULT_SINK@",
+        function(stdout)
+            local volume_level = stdout:match("Volume: front.- (%d+)%%") or "0"
+            local is_muted = tostring(stdout:match("Mute: (%a+)") == "yes")
+
+            if volume_level then
+                volume.text = volume_level .. '%'
+                volume_slider.value = tonumber(volume_level)
+                if tonumber(volume_level) >= 90 then
+                    volume_slider.bar_color = beautiful.red
+                    volume_slider.handle_color = beautiful.red
+                elseif tonumber(volume_level) >= 70 then
+                    volume_slider.bar_color = beautiful.orange
+                    volume_slider.handle_color = beautiful.orange
+                else
+                    volume_slider.bar_color = beautiful.white
+                    volume_slider.handle_color = beautiful.white
+                end
             end
-        end
-        set_icon(is_muted)
-    end)
+            set_icon(is_muted)
+        end)
 end
 
+--- show_volume_popup: Displays the volume popup and starts a timer for auto-hiding.
+-- This function makes the volume popup visible on the screen.
+-- It also starts a timer ('popup_timer') which will automatically hide the popup after a set duration.
+-- This function provides visual feedback to the user.
 local function show_volume_popup()
     volume_popup.visible = true
     popup_timer:start()
 end
 
 awesome.connect_signal("volume::increase", function()
-    awful.spawn("pamixer --increase 5", false)
+    awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%", false)
     update_volume_widget()
     show_volume_popup()
 end)
 
 awesome.connect_signal("volume::decrease", function()
-    awful.spawn("pamixer --decrease 5", false)
+    awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%", false)
     update_volume_widget()
     show_volume_popup()
 end)
 
 awesome.connect_signal("volume::mute", function()
-    awful.spawn("pamixer --toggle-mute", false)
+    awful.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle", false)
     update_volume_widget()
     show_volume_popup()
 end)

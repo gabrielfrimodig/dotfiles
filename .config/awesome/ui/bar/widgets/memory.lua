@@ -1,28 +1,37 @@
 -- Required libraries
 local wibox = require("wibox")
-local beautiful = require("beautiful")
 local watch = require("awful.widget.watch")
-local dpi = require("beautiful").xresources.apply_dpi
+local beautiful = require("beautiful")
+local dpi = beautiful.xresources.apply_dpi
 
 local memory = wibox.widget.textbox()
-memory.font = beautiful.font
+memory.font = beautiful.widget_text
+local memory_icon = wibox.widget.textbox()
+memory_icon.font = beautiful.widget_icon
+memory_icon.text = ''
 
-watch([[bash -c "free -h | awk '/^Mem/ { print $3 }' | sed s/i//g"]], 2, function(_, stdout)
+local memory_widget = wibox.widget {
+    {
+        memory_icon,
+        fg = beautiful.fg_ram,
+        widget = wibox.container.background
+    },
+    {
+        memory,
+        fg = beautiful.fg_ram,
+        widget = wibox.container.background
+    },
+    spacing = dpi(4),
+    layout = wibox.layout.fixed.horizontal
+}
+
+watch([[bash -c "free -h | awk '/^Mem/ { print $3 }' | sed s/i//g"]], 2, function(_, stdout, _, _, exit_code)
+    if exit_code ~= 0 or not stdout:match("%S") then
+        memory.text = "Error"
+        return
+    end
+
     memory.text = stdout
 end)
 
-memory_icon = wibox.widget {
-    markup = '<span font="' .. beautiful.font_icon .. '"foreground="' .. beautiful.pink .. '"> </span>',
-    widget = wibox.widget.textbox,
-}
-
-return wibox.widget {
-    memory_icon,
-    wibox.widget {
-        memory,
-        fg = beautiful.pink,
-        widget = wibox.container.background
-    },
-    spacing = dpi(2),
-    layout = wibox.layout.fixed.horizontal
-}
+return memory_widget

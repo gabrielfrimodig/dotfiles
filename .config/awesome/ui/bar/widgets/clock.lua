@@ -1,23 +1,27 @@
 -- Required libraries
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-local dpi = require("beautiful").xresources.apply_dpi
+local dpi = beautiful.xresources.apply_dpi
 
 local clock = wibox.widget.textclock("<span>%H:%M</span>")
-clock.font = beautiful.font
+clock.font = beautiful.widget_text
+local clock_icon = wibox.widget.textbox()
+clock_icon.font = beautiful.widget_icon
+clock_icon.text = '󱑌'
 
-clock_icon = wibox.widget {
-    markup = '<span font="' .. beautiful.font_icon .. '"foreground="' .. beautiful.green .. '">󱑌 </span>',
-    widget = wibox.widget.textbox,
-}
-
-return wibox.widget {
-    clock_icon,
-    wibox.widget {
-        clock,
-        fg = beautiful.green,
+local clock_widget = wibox.widget {
+    {
+        clock_icon,
+        fg = beautiful.fg_clock,
         widget = wibox.container.background
     },
-    spacing = dpi(2),
+    {
+        clock,
+        fg = beautiful.fg_clock,
+        widget = wibox.container.background
+    },
+    spacing = dpi(4),
     layout = wibox.layout.fixed.horizontal
 }
+
+return clock_widget
