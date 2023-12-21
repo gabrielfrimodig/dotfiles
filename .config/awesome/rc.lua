@@ -19,7 +19,7 @@ local themes = {
 
 local chosen_theme = themes[1]
 
-beautiful.init(string.format("%s/.config/awesome/theme/%s.lua", os.getenv("HOME"), chosen_theme))
+beautiful.init(string.format("%s/.config/awesome/theme/%s/theme.lua", os.getenv("HOME"), chosen_theme))
 
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
