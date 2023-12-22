@@ -22,10 +22,38 @@ myawesomemenu = {
     },
 }
 
+poweroptions = {
+    {
+        "lock",
+        function()
+            awful.spawn("i3lock")
+        end
+    },
+    {
+        "logout",
+        function()
+            awesome.quit()
+        end
+    },
+    {
+        "reboot",
+        function()
+            awful.spawn("reboot")
+        end
+    },
+    {
+        "shutdown",
+        function()
+            awful.spawn("shutdown now")
+        end
+    },
+}
+
 mymainmenu = awful.menu({
     items = {
         { "awesome",       myawesomemenu, beautiful.awesome_icon },
-        { "open terminal", terminal }
+        { "open terminal", terminal },
+        { "power", poweroptions}
     }
 })
 
@@ -34,5 +62,6 @@ mylauncher = awful.widget.launcher({
     image = beautiful.awesome_icon,
     menu = mymainmenu
 })
+
 -- Set the terminal for applications that require it
 menubar.utils.terminal = terminal
