@@ -1,11 +1,10 @@
+-- Required libraries
 local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
+local naughty = require("naughty")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
-local naughty = require("naughty")
-
-local helpers = require("helpers")
 
 naughty.config.defaults.ontop = true
 naughty.config.defaults.icon_size = dpi(30)
@@ -14,51 +13,35 @@ naughty.config.defaults.timeout = 5
 naughty.config.defaults.title = "Notification"
 naughty.config.defaults.position = "top_right"
 
-local icon = wibox.widget.textbox()
-icon.font = "Ubuntu Nerd Font 28"
-icon.markup = '<span foreground="' .. beautiful.fg_widget1 .. '">󰨞</span>'
-
+-- This function customizes the appearance and behavior of notifications.
+-- When a notification request is received, it sets a default timeout of 10 seconds.
+-- It checks for an icon associated with the notification, falling back to a default icon if none is provided.
+-- The notification layout is defined with a left part for the app icon and a right part for the content.
+-- The content includes a custom title and message widget, styled according to the theme.
 naughty.connect_signal("request::display", function(notify)
-    local time = os.date "%H:%M:%S"
-
     notify.timeout = 10
 
     local appicon = notify.icon or notify.app_icon
     if not appicon then appicon = beautiful.notification_icon end
 
-    local action_widget = {
+    local appicon_widget = wibox.widget {
         {
-            {
-                id = 'text_role',
-                align = "center",
-                valign = "center",
-                widget = wibox.widget.textbox
-            },
-            left = dpi(6),
-            right = dpi(6),
-            widget = wibox.container.margin
+            id = "icon",
+            image = appicon,
+            resize = true,
+            widget = wibox.widget.imagebox,
         },
+        shape = gears.shape.rounded_rect,
+        forced_width = dpi(40),
+        forced_height = dpi(40),
         widget = wibox.container.background
     }
-
-    local actions = wibox.widget {
-        notification = notify,
-        base_layout = wibox.widget {
-            --Space for notification
-            spacing = dpi(8),
-            layout = wibox.layout.flex.horizontal
-        },
-        widget_template = action_widget,
-        style = { underline_normal = false, underline_selected = true },
-        widget = naughty.list.actions
-    }
-    helpers.add_hover_cursor(actions, "hand1")
 
     naughty.layout.box {
         notification = notify,
         type = "notification",
-        bg = "#00000000",
-        fg = beautiful.fg_normal,
+        bg = beautiful.bg_popup,
+        fg = beautiful.white,
         widget_template = {
             {
                 {
@@ -66,7 +49,7 @@ naughty.connect_signal("request::display", function(notify)
                         {
                             -- Left part
                             {
-                                icon,
+                                appicon_widget,
                                 layout = wibox.container.place
                             },
                             bg = beautiful.black,
@@ -80,15 +63,15 @@ naughty.connect_signal("request::display", function(notify)
                                     -- Custom Title Widget
                                     widget = wibox.widget.textbox,
                                     text = notify.title,
-                                    font = "JetBrains Mono Bold 10",
-                                    fg = beautiful.fg_focus,
+                                    font = beautiful.notification_bold,
+                                    fg = beautiful.white,
                                 },
                                 {
                                     -- Custom Message Widget
                                     widget = wibox.widget.textbox,
                                     text = notify.message,
-                                    font = "JetBrains Mono 9",
-                                    fg = beautiful.fg_urgent,
+                                    font = beautiful.notification_text,
+                                    fg = beautiful.white,
                                 },
                                 layout = wibox.layout.align.vertical,
                             },
