@@ -11,6 +11,11 @@ end)
 
 local button = awful.button({}, 1, function(t) t:view_only() end)
 
+-- Function to create a taglist widget for each screen in AwesomeWM.
+-- This function sets up a taglist for each screen connected to the system.
+-- The taglist dynamically changes the color of each tag based on whether it contains any windows.
+-- @param s The screen for which the taglist is being created.
+-- @return A taglist widget configured for the provided screen.
 return function(s)
   local tag = awful.widget.taglist {
     screen          = s,
