@@ -2,11 +2,11 @@
 local awful = require("awful")
 local wibox = require("wibox")
 
--- Function to update the tasklist item appearance
+-- The opacity of the icon changes depending on whether the client is in focus.
+-- Clients in focus have full opacity (value of 1), making them stand out,
+-- while unfocused clients have reduced opacity (value of 0.5), giving them a subdued appearance.
 local function update_tasklist_item(self, c, index, objects)
     local icon_container = self:get_children_by_id("icon_container")[1]
-
-    -- Set the size of the icon
     icon_container.forced_width = 40
     icon_container.forced_height = 40
 
@@ -18,7 +18,11 @@ local function update_tasklist_item(self, c, index, objects)
     end
 end
 
--- Define tasklist widget
+-- This function creates a tasklist widget
+-- It displays only visible clients on the screen.
+-- The tasklist allows interaction with client windows:
+--   - Left click on a client to toggle minimization or focus it.
+--   - Right click to open a menu listing all active clients.
 local tasklist = function(s)
     return awful.widget.tasklist {
         screen = s,
