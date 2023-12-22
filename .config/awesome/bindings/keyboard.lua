@@ -3,6 +3,9 @@ local awful         = require("awful")
 local naughty       = require("naughty")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
+local gfs           = require("gears.filesystem")
+local themes_path   = gfs.get_themes_dir()
+
 -- Default modkey.
 -- Modkey: Mod4 (Super key) or Mod1 (Alt key)
 local modkey        = "Mod4"
@@ -17,15 +20,12 @@ awful.keyboard.append_global_keybindings({
     awful.key({ modkey, "Control" }, "m", function()
         awful.util.spawn("i3lock")
     end, { description = "lockscreen", group = "awesome" }),
-    awful.key({ modkey, "Shift" }, "q", function()
-        awesome.emit_signal("module::powermenu:show")
-    end, { description = "powermenu", group = "awesome" }),
     awful.key({ modkey }, "Escape", function()
         awesome.emit_signal("module::powermenu:show")
     end, { description = "powermenu", group = "awesome" }),
     awful.key({ modkey }, "c", function()
-        awesome.emit_signal("module::controlpanel:show")
-    end, { description = "controlpanel", group = "awesome" })
+        awesome.emit_signal("module::dashboard:show")
+    end, { description = "dashboard", group = "awesome" })
 })
 
 -- Launcher
@@ -39,32 +39,34 @@ awful.keyboard.append_global_keybindings({
         awful.spawn("thunar")
     end, { description = "file manager", group = "launcher" }),
     awful.key({}, "Print", function()
-        filepath = "~/Pictures/Screenshots/" .. os.date("%Y-%m-%d_%H:%M:%S") .. ".png"
-        awful.spawn.with_shell('maim -u ' .. filepath)
+        local home = os.getenv("HOME")
+        local filepath = home .. "/Pictures/Screenshots/" .. os.date("%Y-%m-%d_%H:%M:%S") .. ".png"
         naughty.notify({
             icon = filepath,
             title = "Screenshot taken",
             text = filepath
         })
-    end, { description = "screenshot", group = "launcher" }),
+    end, { description = "screen screenshot", group = "launcher" }),
     awful.key({ "Shift" }, "Print", function()
-        filepath = "~/Pictures/Screenshots/" .. os.date("%Y-%m-%d_%H:%M:%S") .. ".png"
+        local home = os.getenv("HOME")
+        local filepath = home .. "/Pictures/Screenshots/" .. os.date("%Y-%m-%d_%H:%M:%S") .. ".png"
         awful.spawn.with_shell('maim -s --format png -u ' .. filepath .. '| xclip -selection clipboard -t image/png -i')
         naughty.notify({
             icon = filepath,
             title = "Select Area for Screenshot",
             text = "Screenshot will be saved"
         })
-    end, { description = "selected screenshot", group = "launcher" }),
+    end, { description = "screenshot area", group = "launcher" }),
     awful.key({ "Control" }, "Print", function()
-        filepath = "~/Pictures/Screenshots/" .. os.date("%Y-%m-%d_%H:%M:%S") .. ".png"
+        local home = os.getenv("HOME")
+        local filepath = home .. "/Pictures/Screenshots/" .. os.date("%Y-%m-%d_%H:%M:%S") .. ".png"
         awful.spawn.with_shell("maim -s --format png -u | xclip -selection clipboard -t image/png -i")
         naughty.notify({
             icon = filepath,
             title = "Select Area for Screenshot",
             text = "Screenshot will be saved to clipboard"
         })
-    end, { description = "selected screenshot", group = "launcher" }),
+    end, { description = "clipboard area", group = "launcher" }),
 })
 
 -- Screen
@@ -188,9 +190,7 @@ awful.keyboard.append_global_keybindings({
     awful.key({ modkey, }, "Left", awful.tag.viewprev,
         { description = "view previous", group = "layout" }),
     awful.key({ modkey, }, "Right", awful.tag.viewnext,
-        { description = "view next", group = "layout" }),
-    awful.key({ modkey, }, "Escape", awful.tag.history.restore,
-        { description = "go back", group = "layout" }),
+        { description = "view next", group = "layout" })
 })
 
 -- Client
