@@ -3,7 +3,7 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-local xresources = require("beautiful.xresources")
+local xresources = beautiful.xresources
 local dpi = xresources.apply_dpi
 
 local taglist = require("ui.bar.taglist")
@@ -19,9 +19,6 @@ local date_widget = require("ui.bar.widgets.date")
 local memory_widget = require("ui.bar.widgets.memory")
 local volume_widget = require("ui.bar.widgets.volume")
 local brightness_widget = require("ui.bar.widgets.brightness")
-
-require("ui.powermenu")
-require("ui.popups.mic")
 
 local function barcontainer(widget)
     local container = wibox.widget
@@ -40,7 +37,7 @@ local function barcontainer(widget)
             right = dpi(4),
             widget = wibox.container.margin
         },
-        bg = beautiful.black,
+        bg = beautiful.bg_bar,
         shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 0) end,
         widget = wibox.container.background
     }
@@ -55,7 +52,7 @@ local function barcontainer(widget)
 end
 
 local separator = wibox.widget {
-    markup = '<span font="' .. beautiful.font .. '">| </span>',
+    markup = '<span font="' .. beautiful.font_u .. '">| </span>',
     align  = 'center',
     valign = 'center',
     widget = wibox.widget.textbox
@@ -76,7 +73,7 @@ local systray = wibox.widget {
             widget = wibox.container.margin,
         },
         shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 8) end,
-        bg = beautiful.bg_alt,
+        bg = beautiful.bg_bar,
         widget = wibox.container.background,
     },
     margins = { top = dpi(6), bottom = dpi(6) },
@@ -85,14 +82,14 @@ local systray = wibox.widget {
 
 local widgetscollection = wibox.widget {
     {
-        barcontainer(volume_widget),     -- Volume
-        barcontainer(brightness_widget), -- Brightness
-        barcontainer(battery_widget),    -- Battery
-        barcontainer(cpu_widget),        -- CPU
-        barcontainer(memory_widget),     -- RAM
-        barcontainer(wifi_widget),       -- Wifi
-        barcontainer(date_widget),       -- Calendar
-        barcontainer(clock_widget),      -- Time
+        barcontainer(volume_widget),
+        barcontainer(brightness_widget),
+        barcontainer(battery_widget),
+        barcontainer(cpu_widget),
+        barcontainer(memory_widget),
+        barcontainer(wifi_widget),
+        barcontainer(date_widget),
+        barcontainer(clock_widget),
         spacing = dpi(4),
         layout = wibox.layout.fixed.horizontal,
     },
@@ -100,6 +97,10 @@ local widgetscollection = wibox.widget {
     widget = wibox.container.margin,
 }
 
+-- This function creates and configures a wibar (widget bar)
+-- It includes a horizontal layout containing taglist, tasklist, and system tray.
+-- The wibar is designed to display information and provide interaction points for the user,
+-- organizing essential widgets in a convenient and aesthetically pleasing manner at the top of the screen.
 local function get_bar(s)
     s.mywibar = awful.wibar({
         position = "top",
@@ -110,7 +111,7 @@ local function get_bar(s)
         height = dpi(36),
         width = s.geometry.width,
         screen = s,
-        bg = beautiful.black,
+        bg = beautiful.bg_bar,
         opacity = 0.85,
     })
 
