@@ -196,7 +196,7 @@ awesome.connect_signal("volume::mute", function()
     show_volume_popup()
 end)
 
-watch("pamixer --get-volume --get-mute", 1, function()
+watch("pactl get-sink-volume @DEFAULT_SINK@; pactl get-sink-mute @DEFAULT_SINK@", 1, function()
     update_volume_widget()
     collectgarbage("collect")
 end)
