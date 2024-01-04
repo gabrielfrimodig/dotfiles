@@ -1,0 +1,79 @@
+
+* {
+    bg:             #1e1e2e;
+    fg-inputbar:    #cdd6f4;
+    fg-prompt:      #fab387;
+    fg-entry:       #fab387;
+    fg-selected:    #fab387;
+    fg-placeholder: #45475a;
+    fg-normal:      #45475a;
+}
+
+configuration {
+    font:           "JetBrains Mono 12";
+    show-icons:     true;
+    sidebar-mode:   false;
+}
+
+window {
+    transparency:       "real";
+    background-color:   @bg;
+    border:             0px;
+    border-radius:      14px;
+    width:              720px;
+	height:             420px;
+}
+
+inputbar {
+    background-color:   transparent;
+    text-color:         @fg-inputbar;
+    expand:             false;
+    children: [ prompt,textbox-prompt-colon,entry,case-indicator ];
+}
+
+prompt {
+    enable:         true;
+    expand:         false;
+    text-color:     @fg-prompt;
+    padding:        5px;
+}
+
+entry {
+    background-color:   @bg;
+    text-color:         @fg-entry;
+    placeholder-color:  @fg-placeholder;
+    placeholder:        "Type to filter";
+    border:             0px;
+    padding:            5px;
+    border-radius:      14px;
+    expand:             true;
+    blink:              true;
+}
+
+element.normal.normal {
+    background-color:   transparent;
+    orientation:        vertical;
+    text-color:         @fg-normal;
+    border:             0px;
+    padding:            5px;
+}
+
+element-icon {
+    size:   28px;
+}
+
+element-text {
+    margin: 0.5% 0.5% -0.5% 0.5%;
+}
+
+element selected normal, element selected active {
+    background-color:   @bg;
+    text-color:         @fg-selected;
+}
+
+element.alternate.normal {
+    background-color:   transparent;
+    border:             0px;
+    padding:            5px;
+    text-color:         @fg-normal;
+}
