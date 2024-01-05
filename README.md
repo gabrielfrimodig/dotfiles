@@ -133,6 +133,7 @@ Enjoy making your desktop truly your own!
 
 ## :bulb: Features
 
+- **Theme:** Following [Catppuccin mocha](https://github.com/catppuccin/catppuccin).
 - **Client in focus:** The client in focus is highlighted while the other are somewhat opaque.
 
 <div align="center">
