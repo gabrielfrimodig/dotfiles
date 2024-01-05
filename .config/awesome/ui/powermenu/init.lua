@@ -36,7 +36,7 @@ local powermenu = awful.popup {
 
 -- Icon as temporary profile_picture picture
 local profile_picture = wibox.widget {
-    markup = string.format('<span font="%s" foreground="%s">󰙃</span>', beautiful.powermenu_profile, beautiful.profile),
+    markup = string.format('<span font="%s" foreground="%s">󰙃</span>', beautiful.powermenu_profile, beautiful.fg_profile),
     align = "center",
     widget = wibox.widget.textbox
 }

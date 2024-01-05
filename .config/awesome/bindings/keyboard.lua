@@ -41,6 +41,7 @@ awful.keyboard.append_global_keybindings({
     awful.key({}, "Print", function()
         local home = os.getenv("HOME")
         local filepath = home .. "/Pictures/Screenshots/" .. os.date("%Y-%m-%d_%H:%M:%S") .. ".png"
+        awful.spawn.with_shell('maim -u ' .. filepath)
         naughty.notify({
             icon = filepath,
             title = "Screenshot taken",

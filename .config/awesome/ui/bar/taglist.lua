@@ -26,7 +26,7 @@ return function(s)
       layout = wibox.layout.fixed.horizontal,
     },
     style           = {
-      font = beautiful.font_icon,
+      font = beautiful.widget_icon,
     },
     widget_template = {
       {
