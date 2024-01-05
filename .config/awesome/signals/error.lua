@@ -1,4 +1,3 @@
-
 -- Required libraries
 local naughty = require("naughty")
 
@@ -29,4 +28,3 @@ do
         in_error = false
     end)
 end
-

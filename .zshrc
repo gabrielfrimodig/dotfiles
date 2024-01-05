@@ -6,40 +6,39 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-#
-# .zshrc is sourced in interactive shells.
-# It should contain commands to set up aliases,
-# functions, options, key bindings, etc.
-#
-
 autoload -U compinit
 compinit
 
-#allow tab completion in the middle of a word
+# Allow tab completion in the middle of a word
 setopt COMPLETE_IN_WORD
 
-## keep background processes at full speed
+## Keep background processes at full speed
 #setopt NOBGNICE
-## restart running processes on exit
+## Restart running processes on exit
 #setopt HUP
 
-## history
+## History
 #setopt APPEND_HISTORY
-## for sharing history between zsh processes
+## For sharing history between zsh processes
 #setopt INC_APPEND_HISTORY
 #setopt SHARE_HISTORY
 
-## never ever beep ever
+## Never ever beep ever
 setopt NO_BEEP
 
-## automatically decide when to page a list of completions
+## Automatically decide when to page a list of completions
 #LISTMAX=0
 
-## disable mail checking
+## Disable mail checking
 #MAILCHECK=0
 
-# autoload -U colors
+# Autoload -U colors
 #colors
+
+# History
+export HISTFILE=~/.zsh_history
+export HISTSIZE=10000
+export SAVEHIST=10000
 
 # Plugins
 source ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -50,31 +49,78 @@ source ~/.config/zsh/plugins/zsh-completions/src
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# History
-export HISTFILE=~/.zsh_history
-export HISTSIZE=10000
-export SAVEHIST=10000
+### ARCHIVE EXTRACTION
+# usage: ex <file>
+ex ()
+{
+  if [ -f "$1" ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1   ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *.deb)       ar x $1      ;;
+      *.tar.xz)    tar xf $1    ;;
+      *.tar.zst)   unzstd $1    ;;
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
 
 # Alias
-alias "vim"="nvim"
-alias "vi"="vim"
-alias "ls"="exa"
-alias "x"="ranger"
+alias vim='nvim'
+alias vi='vim'
+alias x='ranger'
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/gw/.miniconda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/gw/.miniconda/etc/profile.d/conda.sh" ]; then
-        . "/home/gw/.miniconda/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/gw/.miniconda/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+# Changing "ls" to "eza"
+alias ls='eza -a --color=always --group-directories-first'
+alias la='eza -al --color=always --group-directories-first'
+alias ll='eza -l --color=always --group-directories-first'
+alias lt='eza -aT --color=always --group-directories-first'
+alias l.='eza -a | egrep "^\."'
+
+# adding flags
+alias df='df -h'
+alias free='free -m'
+
+# Colorize grep output
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+# switch between shells
+alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
+alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
+
+# Networking
+alias myip='curl http://ipecho.net/plain; echo' # Echo external IP
+
+# Quick access
+alias g='git'
+alias j='jobs -l'
+
+# Miscellaneous
+alias reload='source ~/.zshrc'
+alias h='history'
+
+# the terminal rickroll
+alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
+
+# Exports
+export PATH=$PATH:$(npm config get prefix)/bin
+export PATH="$HOME/.cargo/bin:$PATH"
+
+export EDITOR=nvim
+export VISUAL=nvim
 
 [[ -s /home/gw/.autojump/etc/profile.d/autojump.sh ]] && source /home/gw/.autojump/etc/profile.d/autojump.sh
 

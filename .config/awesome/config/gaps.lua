@@ -1,4 +1,3 @@
-
 -- Required libraries
 local beautiful = require("beautiful")
 
