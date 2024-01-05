@@ -216,6 +216,7 @@ Enjoy making your desktop truly your own!
   - **xclip:** Copying screenshots to clipboard
   - The folder `~/Pictures/Screenshots/` must exists for screenshots to be saved.
 - **playerctl:** Media player control
+- **i3lock:** Lockscreen
 - **Fonts:**
   - **Icons:** [Material Design Icons](https://pictogrammers.com/)
   - **AwesomeWM:** `JetBrains Mono` and `Ubuntu Nerd Font`
