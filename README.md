@@ -209,7 +209,7 @@ Enjoy making your desktop truly your own!
 - **Picom:** [yshui/picom](https://github.com/yshui/picom)
 - **feh:** For setting wallpaper
 - **rofi:** Application launcher
-- **Pamixer:** Managing sound and mic
+- **pactl:** Managing sound and mic
 - **acpi:** Battery Information 
 - **xbacklight:** Screen brightness
 - **maim:** Screenshot tool
