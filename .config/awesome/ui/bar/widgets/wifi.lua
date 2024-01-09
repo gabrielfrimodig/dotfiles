@@ -7,9 +7,9 @@ local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 
 local wifi_name = wibox.widget.textbox()
-wifi_name.font = beautiful.font_widget_text
+wifi_name.font = beautiful.widget_text
 local wifi_icon = wibox.widget.textbox()
-wifi_icon.font = beautiful.font_widget_icon
+wifi_icon.font = beautiful.widget_icon
 
 local wifi_widget = wibox.widget {
     {
@@ -36,7 +36,7 @@ local wifi_tooltip = awful.tooltip({
     fg = beautiful.fg_wifi,
     border_color = beautiful.black,
     shape = gears.shape.rounded_rect,
-    font = beautiful.font_widget_text,
+    font = beautiful.widget_text,
     margins = dpi(8),
 })
 

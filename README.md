@@ -24,6 +24,7 @@
 Welcome to my AwesomeWM configuration repository! This setup is crafted to create a productive and visually appealing desktop environment using the AwesomeWM. It's designed to be elegant, allowing for quick navigation and organization of the workspace with a sleek, minimalist aesthetic.
 
 Dive into the configuration files to discover a realm of efficiency and customization. Whether you're new to AwesomeWM or a seasoned enthusiast, I hope this repository serves as both a resource and inspiration for your own configurations.
+Changes will be made first and foremost through the [dev branch](https://github.com/gabrielfrimodig/dotfiles/tree/dev) before merged.
 
 Enjoy making your desktop truly your own!
 
@@ -209,7 +210,7 @@ Enjoy making your desktop truly your own!
 - **Picom:** [yshui/picom](https://github.com/yshui/picom)
 - **feh:** For setting wallpaper
 - **rofi:** Application launcher
-- **Pamixer:** Managing sound and mic
+- **pactl:** Managing sound and mic
 - **acpi:** Battery Information 
 - **xbacklight:** Screen brightness
 - **maim:** Screenshot tool
