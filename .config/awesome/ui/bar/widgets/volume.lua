@@ -28,24 +28,20 @@ local volume_widget = wibox.widget {
     layout = wibox.layout.fixed.horizontal
 }
 
-local volume_slider = wibox.widget {
-    bar_shape = gears.shape.rounded_rect,
-    bar_height = dpi(3),
-    bar_color = beautiful.white,
-    handle_color = beautiful.white,
-    handle_shape = gears.shape.circle,
-    handle_width = dpi(15),
-    handle_border_width = dpi(1),
-    handle_border_color = beautiful.border_color,
-    value = 50,
-    maximum = 100,
+local volume_progressbar = wibox.widget {
+    max_value = 100,
+    value = 10,
     forced_height = dpi(20),
     forced_width = dpi(140),
-    widget = wibox.widget.slider
+    shape = gears.shape.rounded_rect,
+    bar_shape = gears.shape.rounded_rect,
+    color = beautiful.white,
+    background_color = beautiful.bg_popup or beautiful.bg_normal,
+    widget = wibox.widget.progressbar,
 }
 
 local volume_popup = awful.popup {
-    screen = screen.primary,
+    screen = awful.screen.focused(),
     widget = {
         {
             widget = wibox.container.margin,
@@ -69,7 +65,7 @@ local popup_timer = gears.timer {
     end
 }
 
-local volume_slider_with_margins = wibox.container.margin(volume_slider, dpi(40), dpi(40), dpi(0), dpi(20))
+local volume_progressbar_with_margins = wibox.container.margin(volume_progressbar, dpi(40), dpi(40), dpi(0), dpi(20))
 
 --- get_current_audio_output_device: Determines the current audio output device used by the system.
 -- This function executes a shell command using 'pactl' to list audio sinks and parses the output to find the active port.
@@ -124,7 +120,7 @@ volume_popup:setup {
                 widget = wibox.container.background
             },
             {
-                volume_slider_with_margins,
+                volume_progressbar_with_margins,
                 widget = wibox.container.margin,
             },
             layout = wibox.layout.fixed.vertical
@@ -153,16 +149,15 @@ local function update_volume_widget()
 
             if volume_level then
                 volume.text = volume_level .. '%'
-                volume_slider.value = tonumber(volume_level)
+                volume_progressbar.value = tonumber(volume_level)
+
+                -- Change color based on volume level
                 if tonumber(volume_level) >= 90 then
-                    volume_slider.bar_color = beautiful.red
-                    volume_slider.handle_color = beautiful.red
+                    volume_progressbar.color = beautiful.red
                 elseif tonumber(volume_level) >= 70 then
-                    volume_slider.bar_color = beautiful.orange
-                    volume_slider.handle_color = beautiful.orange
+                    volume_progressbar.color = beautiful.orange
                 else
-                    volume_slider.bar_color = beautiful.white
-                    volume_slider.handle_color = beautiful.white
+                    volume_progressbar.color = beautiful.white
                 end
             end
             set_icon(is_muted)
