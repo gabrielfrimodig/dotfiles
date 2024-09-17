@@ -10,7 +10,7 @@ mic_icon.font = beautiful.popup_icon
 mic_icon.text = "󰍬"
 
 local mic_popup = awful.popup {
-    screen = screen.primary,
+    screen = awful.screen.focused(),
     widget = {
         {
             widget = wibox.container.margin,
