@@ -14,7 +14,7 @@ local reboot = create_button("󰑓", "Reboot", "reboot", beautiful.fg_reboot)
 local shutdown = create_button("󰐥", "Shutdown", "shutdown now", beautiful.fg_shutdown)
 
 local powermenu = awful.popup {
-    screen = screen.primary,
+    screen = awful.screen.focused(),
     widget = {
         {
             widget = wibox.container.margin,

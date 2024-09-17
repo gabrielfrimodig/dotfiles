@@ -41,12 +41,13 @@ Enjoy making your desktop truly your own!
 
 ## :bell: Latest Updates
 
+- Powermenu active on focused screen
+- New location for layoutbox
 - Rofi configuration
 - New Layout icons
 - Tags opacity
 - Popups for brightness, volume and microphone
 - Powermenu implementation
-- New icons for bar (Material Design Icon)
 
 ## :hammer: Future Plans
 
