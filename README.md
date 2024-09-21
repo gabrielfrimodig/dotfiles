@@ -41,13 +41,13 @@ Enjoy making your desktop truly your own!
 
 ## :bell: Latest Updates
 
+- Popup for layout change
 - Volume och brightness: replace slider with progressbar
 - Powermenu and other popups active on focused screen
 - New location for layoutbox
 - Rofi configuration
 - New Layout icons
 - Tags opacity
-- Popups for brightness, volume and microphone
 
 ## :hammer: Future Plans
 

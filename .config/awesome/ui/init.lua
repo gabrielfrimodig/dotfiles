@@ -9,3 +9,6 @@ require 'ui.powermenu'
 
 -- Popups
 require 'ui.popups.mic'
+
+-- Popups
+require 'ui.popups.layouts'
