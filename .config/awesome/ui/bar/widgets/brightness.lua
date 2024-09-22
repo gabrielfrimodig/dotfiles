@@ -29,24 +29,20 @@ local brightness_widget = wibox.widget {
     layout = wibox.layout.fixed.horizontal,
 }
 
-local brightness_slider = wibox.widget {
-    bar_shape = gears.shape.rounded_rect,
-    bar_height = dpi(3),
-    bar_color = beautiful.white,
-    handle_color = beautiful.white,
-    handle_shape = gears.shape.circle,
-    handle_width = dpi(15),
-    handle_border_width = dpi(1),
-    handle_border_color = beautiful.border_color,
+local brightness_progressbar = wibox.widget {
+    max_value = 100,
     value = 50,
-    maximum = 100,
     forced_height = dpi(20),
     forced_width = dpi(140),
-    widget = wibox.widget.slider
+    shape = gears.shape.rounded_rect,
+    bar_shape = gears.shape.rounded_rect,
+    color = beautiful.white,
+    background_color = beautiful.bg_popup or beautiful.bg_normal,
+    widget = wibox.widget.progressbar,
 }
 
 local brightness_popup = awful.popup {
-    screen = screen.primary,
+    screen = awful.screen.focused(),
     widget = {
         {
             widget = wibox.container.margin,
@@ -59,6 +55,7 @@ local brightness_popup = awful.popup {
     focus = false,
     placement = awful.placement.centered,
     shape = gears.shape.rounded_rect,
+    border_width = dpi(2),
     bg = beautiful.bg_popup or beautiful.black,
 }
 
@@ -70,7 +67,8 @@ local popup_timer = gears.timer {
     end
 }
 
-local brightness_slider_with_margins = wibox.container.margin(brightness_slider, dpi(40), dpi(40), dpi(0), dpi(20))
+local brightness_progressbar_with_margins = wibox.container.margin(brightness_progressbar, dpi(40), dpi(40), dpi(0),
+    dpi(20))
 
 brightness_popup:setup {
     {
@@ -81,7 +79,7 @@ brightness_popup:setup {
                 widget = wibox.container.background
             },
             {
-                brightness_slider_with_margins,
+                brightness_progressbar_with_margins,
                 widget = wibox.container.margin,
             },
             layout = wibox.layout.fixed.vertical
@@ -97,12 +95,12 @@ brightness_icon_popup.valign = "center"
 --- update_brightness_widget: Updates the brightness widget with the current screen brightness level.
 -- This function uses the 'xbacklight -get' shell command to fetch the current screen brightness.
 -- The output is parsed to obtain the brightness level as a numerical value.
--- The function then updates the 'brightness_slider' value to reflect the current brightness.
+-- The function then updates the 'brightness_progressbar' value to reflect the current brightness.
 -- The brightness level is rounded to the nearest integer for better representation in the UI.
 local function update_brightness_widget()
     awful.spawn.easy_async("xbacklight -get", function(stdout)
-        local brightness_level = math.floor(stdout + 0.5)
-        brightness_slider.value = tonumber(brightness_level)
+        local brightness_level = math.floor(tonumber(stdout + 0.5))
+        brightness_progressbar.value = brightness_level
     end)
 end
 

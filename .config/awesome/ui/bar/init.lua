@@ -120,6 +120,8 @@ local function get_bar(s)
             {
                 layout = wibox.layout.align.horizontal,
                 {
+                    mylayoutbox,
+                    separator,
                     barcontainer(taglist(s)),
                     separator,
                     barcontainer(tasklist(s)),
@@ -129,7 +131,6 @@ local function get_bar(s)
                 {
                     widgetscollection,
                     systray,
-                    mylayoutbox,
                     layout = wibox.layout.fixed.horizontal,
                 },
             },

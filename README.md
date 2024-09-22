@@ -41,12 +41,13 @@ Enjoy making your desktop truly your own!
 
 ## :bell: Latest Updates
 
+- Popup for layout change
+- Volume och brightness: replace slider with progressbar
+- Powermenu and other popups active on focused screen
+- New location for layoutbox
 - Rofi configuration
 - New Layout icons
 - Tags opacity
-- Popups for brightness, volume and microphone
-- Powermenu implementation
-- New icons for bar (Material Design Icon)
 
 ## :hammer: Future Plans
 
@@ -54,7 +55,6 @@ Enjoy making your desktop truly your own!
 - Improve the awesome menu (mouse right click).
 - Icon support for bluetooth headphones.
 - Installtion script ([Issue #12](https://github.com/gabrielfrimodig/dotfiles/issues/12)).
-- Layout display popup when changed.
 
 ## :wrench: Installation
 
@@ -117,19 +117,24 @@ Enjoy making your desktop truly your own!
 <div align="center">
     <em>Wibar widgets</em>
     <br>
-    <img width="800px" src="https://i.imgur.com/WlEMHPr.png" alt="Widgets" />
+    <img width="800px" src=".github/assets/widgets.png" alt="Widgets" />
 </div>
 
 <div align="center">
     <em>Different popups</em>
     <br>
-    <img widget="180px" src="https://i.imgur.com/gqgsKbu.png" alt="Popups" />
+    <img widget="380px" src=".github/assets/layout.png" alt="Popups" />
     <br>
-    <img width="180px" src="https://i.imgur.com/dGz9kVO.png" alt="Popups" />
-    <img width="180px" src="https://i.imgur.com/faPD0ra.png" alt="Popups" />
+    <img widget="180px" src=".github/assets/brightness.png" alt="Popups" />
     <br>
-    <img width="160px" src="https://i.imgur.com/dyEd3fN.png" alt="Popups" />
-    <img width="160px" src="https://i.imgur.com/X4tx3JH.png" alt="Popups" />
+    <img width="180px" src=".github/assets/speaker_on_white.png" alt="Popups" />
+    <img width="180px" src=".github/assets/speaker_off_white.png" alt="Popups" />
+    <br>
+    <img width="160px" src=".github/assets/speaker_on_orange.png" alt="Popups" />
+    <img width="160px" src=".github/assets/speaker_on_red.png" alt="Popups" />
+    <br>
+    <img width="160px" src=".github/assets/mic_on.png" alt="Popups" />
+    <img width="164px" src=".github/assets/mic_off.png" alt="Popups" />
 </div>
 
 ## :bulb: Features
@@ -225,6 +230,8 @@ Enjoy making your desktop truly your own!
   ```bash
   chmod +x autostart.sh
   ```
+- **Kitty** Default terminal
+- **Vim** Default text-editor
 
 ## :musical_keyboard: Keybindings
 
@@ -276,6 +283,8 @@ Find the detailed keybinding list on the [wiki page](https://github.com/gabrielf
 │   │   │   ├── tiletopw.png
 │   │   │   └── tilew.png
 │   │   └── theme.lua
+│   ├── gruvbox
+│   └── seashell
 └── ui
     ├── bar
     │   ├── init.lua
@@ -295,10 +304,12 @@ Find the detailed keybinding list on the [wiki page](https://github.com/gabrielf
     ├── notifications
     │   └── init.lua
     ├── popups
+    │   ├── layouts.lua
     │   └── mic.lua
     └── powermenu
         ├── button.lua
         └── init.lua
+
 ```
 
 </details>
