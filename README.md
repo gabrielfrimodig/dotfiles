@@ -226,6 +226,8 @@ Enjoy making your desktop truly your own!
   ```bash
   chmod +x autostart.sh
   ```
+- **Kitty** Default terminal
+- **Vim** Default text-editor
 
 ## :musical_keyboard: Keybindings
 
