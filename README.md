@@ -282,6 +282,8 @@ Find the detailed keybinding list on the [wiki page](https://github.com/gabrielf
 │   │   │   ├── tiletopw.png
 │   │   │   └── tilew.png
 │   │   └── theme.lua
+│   ├── gruvbox
+│   └── seashell
 └── ui
     ├── bar
     │   ├── init.lua
@@ -301,10 +303,12 @@ Find the detailed keybinding list on the [wiki page](https://github.com/gabrielf
     ├── notifications
     │   └── init.lua
     ├── popups
+    │   ├── layouts.lua
     │   └── mic.lua
     └── powermenu
         ├── button.lua
         └── init.lua
+
 ```
 
 </details>
