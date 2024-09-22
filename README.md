@@ -118,19 +118,22 @@ Enjoy making your desktop truly your own!
 <div align="center">
     <em>Wibar widgets</em>
     <br>
-    <img width="800px" src="https://i.imgur.com/WlEMHPr.png" alt="Widgets" />
+    <img width="800px" src=".github/assets/widgets.png" alt="Widgets" />
 </div>
 
 <div align="center">
     <em>Different popups</em>
     <br>
-    <img widget="180px" src="https://i.imgur.com/gqgsKbu.png" alt="Popups" />
+    <img widget="180px" src=".github/assets/brightness.png" alt="Popups" />
     <br>
-    <img width="180px" src="https://i.imgur.com/dGz9kVO.png" alt="Popups" />
-    <img width="180px" src="https://i.imgur.com/faPD0ra.png" alt="Popups" />
+    <img width="180px" src=".github/assets/speaker_on_white.png" alt="Popups" />
+    <img width="180px" src=".github/assets/speaker_off_white.png" alt="Popups" />
     <br>
-    <img width="160px" src="https://i.imgur.com/dyEd3fN.png" alt="Popups" />
-    <img width="160px" src="https://i.imgur.com/X4tx3JH.png" alt="Popups" />
+    <img width="160px" src=".github/assets/speaker_on_orange.png" alt="Popups" />
+    <img width="160px" src=".github/assets/speaker_on_red.png" alt="Popups" />
+    <br>
+    <img width="160px" src=".github/assets/mic_on.png" alt="Popups" />
+    <img width="164px" src=".github/assets/mic_off.png" alt="Popups" />
 </div>
 
 ## :bulb: Features
