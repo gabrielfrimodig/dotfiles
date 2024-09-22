@@ -55,7 +55,6 @@ Enjoy making your desktop truly your own!
 - Improve the awesome menu (mouse right click).
 - Icon support for bluetooth headphones.
 - Installtion script ([Issue #12](https://github.com/gabrielfrimodig/dotfiles/issues/12)).
-- Layout display popup when changed.
 
 ## :wrench: Installation
 
@@ -123,6 +122,8 @@ Enjoy making your desktop truly your own!
 
 <div align="center">
     <em>Different popups</em>
+    <br>
+    <img widget="380px" src=".github/assets/layout.png" alt="Popups" />
     <br>
     <img widget="180px" src=".github/assets/brightness.png" alt="Popups" />
     <br>
