@@ -41,7 +41,6 @@ local layout_popup = awful.popup {
     },
     bg = beautiful.bg_popup or beautiful.black,
     border_width = dpi(2),
-    border_color = beautiful.xbackground,
     placement = awful.placement.centered,
     shape = gears.shape.rounded_rect,
     ontop = true,

@@ -54,6 +54,7 @@ local volume_popup = awful.popup {
     focus = false,
     placement = awful.placement.centered,
     shape = gears.shape.rounded_rect,
+    border_width = dpi(2),
     bg = beautiful.bg_popup or beautiful.black,
 }
 
