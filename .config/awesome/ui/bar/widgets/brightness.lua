@@ -110,6 +110,9 @@ end
 -- This function provides visual feedback to the user.
 local function show_brightness_popup()
     brightness_popup.visible = true
+    if popup_timer.started then
+        popup_timer:stop()
+    end
     popup_timer:start()
 end
 
