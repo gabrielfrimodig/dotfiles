@@ -6,7 +6,7 @@
 </div>
 
 <div align="center">
-    <img src="https://i.imgur.com/rwlsX3b.png" />
+    <img src=".github/assets/full_desktop.png" />
 </div>
 
 <div align="center">
