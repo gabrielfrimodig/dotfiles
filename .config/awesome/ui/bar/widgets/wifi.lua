@@ -6,6 +6,8 @@ local awful = require("awful")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 
+local selection_script = "~/.config/awesome/scripts/rofi-wifi-menu.sh"
+
 local wifi_name = wibox.widget.textbox()
 wifi_name.font = beautiful.widget_text
 local wifi_icon = wibox.widget.textbox()
@@ -49,27 +51,39 @@ local wifi_tooltip = awful.tooltip({
 local function update_widget(ssid, signal_strength)
     local wifi_symbol = ''
 
-    if signal_strength >= 80 then
-        wifi_symbol = "󰤨"
-    elseif signal_strength >= 60 then
-        wifi_symbol = "󰤥"
-    elseif signal_strength >= 45 then
-        wifi_symbol = "󰤢"
-    elseif signal_strength >= 40 then
-        wifi_symbol = "󰤟"
-    elseif signal_strength >= 20 then
-        wifi_symbol = "󰤯"
+    if not ssid or ssid == "" then
+        -- WiFi is turned off or there is no connection
+        wifi_symbol = "󰤮" -- Symbol for WiFi off/disconnected
+        wifi_name.text = "No Connection" -- Alternative text for no connection
+        wifi_tooltip:set_text("WiFi is turned off or no connection")
     else
-        wifi_symbol = "󰤮"
+        -- WiFi is connected, update based on signal strength
+        if signal_strength >= 80 then
+            wifi_symbol = "󰤨"
+        elseif signal_strength >= 60 then
+            wifi_symbol = "󰤥"
+        elseif signal_strength >= 45 then
+            wifi_symbol = "󰤢"
+        elseif signal_strength >= 40 then
+            wifi_symbol = "󰤟"
+        elseif signal_strength >= 20 then
+            wifi_symbol = "󰤯"
+        else
+            wifi_symbol = "󰤮"
+        end
+
+        wifi_name.text = ssid
+        wifi_tooltip:set_text("ESSID: " .. ssid .. "\nSignal Strength: " .. signal_strength .. "%")
     end
 
     wifi_icon.text = wifi_symbol
-    wifi_name.text = ssid
-
-    if wifi_tooltip then
-        wifi_tooltip:set_text("ESSID: " .. ssid .. "\nSignal Strength: " .. signal_strength .. "%")
-    end
 end
+
+wifi_name:connect_signal("button::press", function(_, _, _, button)
+    if (button == 1) then
+        awful.spawn.with_shell(selection_script)
+    end
+end)
 
 watch([[bash -c "nmcli -t -f active,ssid,signal dev wifi | grep '^yes' | cut -d':' -f2,3"]], 2, function(_, stdout)
     local ssid, signal_strength = stdout:match("(.*):(%d+)")
